@@ -37,11 +37,31 @@ const userSchema = new Schema(
         {
           tourId: { type: Schema.Types.ObjectId, ref: "Tour" },
           rating: { type: Number, default: 0, min: 0, max: 5 },
-          date: { type: Date, default: Date.now }, 
-          review: { type: String, default: "" }, 
+          date: { type: Date, default: Date.now },
+          review: { type: String, default: "" },
         },
       ],
-      default: [], 
+      default: [],
+    },
+    isFrozen: {
+      type: Boolean,
+      default: false,
+    },
+    isBan: {
+      type: Boolean,
+      default: false,
+    },
+    banExpiresAt: {
+      type: Date,
+      default: null,
+    },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

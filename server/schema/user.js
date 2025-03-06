@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
+const bcrypt = require("bcrypt");
+require("dotenv").config();
+const JWT_SECRET = process.env.JWT_SECRET;
+const jwt = require("jsonwebtoken");
 
 const userSchema = new Schema(
   {
@@ -26,7 +30,7 @@ const userSchema = new Schema(
     earnings: { type: Number, min: 0, default: 0 },
     phone_number: {
       type: String,
-      match: /^(070|050|055|010|077)\s\d{3}\s\d{2}\s\d{2}$/,
+      match: /^\+(\d{1,4})\s?(\d{1,15})$/,
     },
     favorites: {
       type: [Schema.Types.ObjectId],
@@ -55,6 +59,7 @@ const userSchema = new Schema(
       type: Date,
       default: null,
     },
+    verificationCode: { type: String, default: null },
     isVerified: {
       type: Boolean,
       default: false,
@@ -66,5 +71,47 @@ const userSchema = new Schema(
   },
   { timestamps: true }
 );
+
+userSchema.pre("save", async function (next) {
+  if (this.isModified("password")) {
+    try {
+      this.password = await bcrypt.hash(this.password, 10);
+    } catch (error) {
+      return next(error);
+    }
+  }
+});
+
+userSchema.statics.login = async (username, password) => {
+  const user = await this.findOne(username);
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  const isMatch = await bcrypt.compare(password, this.password);
+
+  if (!isMatch) {
+    throw new Error("Invalid credentials");
+  }
+  return user;
+};
+
+userSchema.methods.generateToken = async () => {
+  const payload = { id: this._id, role: this.role };
+  const secret = JWT_SECRET || "default_secret_key";
+  const options = { expiresIn: "6h" };
+  return jwt.sign(payload, secret, options);
+};
+
+userSchema.statics.decodeToken = (token) => {
+  const secret = JWT_SECRET || "default_secret_key";
+  const decode = jwt.verify(token, secret, (err, decoded) => {
+    if (err) {
+      return err;
+    }
+    return decoded;
+  });
+  return decode;
+};
 
 module.exports = userSchema;

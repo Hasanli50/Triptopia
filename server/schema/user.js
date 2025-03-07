@@ -51,7 +51,7 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    isBan: {
+    isBanned: {
       type: Boolean,
       default: false,
     },
@@ -82,28 +82,26 @@ userSchema.pre("save", async function (next) {
   }
 });
 
-userSchema.statics.login = async (username, password) => {
-  const user = await this.findOne(username);
+userSchema.statics.login = async function (username, password) {
+  const user = await this.findOne({ username });
   if (!user) {
     throw new Error("User not found");
   }
-
-  const isMatch = await bcrypt.compare(password, this.password);
-
+  const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
     throw new Error("Invalid credentials");
   }
   return user;
 };
 
-userSchema.methods.generateToken = async () => {
+userSchema.methods.generateToken = function () {
   const payload = { id: this._id, role: this.role };
   const secret = JWT_SECRET || "default_secret_key";
   const options = { expiresIn: "6h" };
   return jwt.sign(payload, secret, options);
 };
 
-userSchema.statics.decodeToken = (token) => {
+userSchema.statics.decodeToken = function (token) {
   const secret = JWT_SECRET || "default_secret_key";
   const decode = jwt.verify(token, secret, (err, decoded) => {
     if (err) {

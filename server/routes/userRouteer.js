@@ -6,6 +6,9 @@ const {
   getByToken,
   userRegister,
   verifyAccount,
+  userLogin,
+  freezeAccount,
+  unFreezeAccount,
 } = require("../controllers/userController.js");
 const imageUpload = require("../config/profileImageMulter.js");
 
@@ -14,5 +17,8 @@ router.get("/:id", getById);
 router.get("/:token", getByToken);
 router.post("/", imageUpload.single("profile_image"), userRegister);
 router.post("/verify-account", verifyAccount);
+router.post("/user-login", userLogin);
+router.patch("/freeze-account/:id", freezeAccount);
+router.patch("/unfreeze-account/:id", unFreezeAccount);
 
 module.exports = router;

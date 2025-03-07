@@ -178,7 +178,150 @@ const verifyAccount = async (req, res) => {
       });
     }
   } catch (error) {
+    res.status(500).json({
+      message: error.message || "Internal server error",
+      status: "fail",
+      data: {},
+    });
+  }
+};
+
+const userLogin = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const user = await User.login(username, password);
+
+    if (!user) {
+      res.status(404).json({
+        message: "User not found",
+        status: "fail",
+        data: {},
+      });
+    }
+
+    if (user.isVerified === false) {
+      res.status(404).json({
+        message: "Your account not verified! Please verify your account",
+        status: "fail",
+        data: {},
+      });
+    }
+
+    if (user.banExpiresAt < Date.now()) {
+      await User.findByIdAndUpdate(
+        user._id,
+        {
+          isBanned: false,
+          banExpiresAt: null,
+        },
+        { new: true }
+      );
+    }
+    if (user.isBanned === true) {
+      const remainingMilliseconds = user.banExpiresAt - Date.now();
+      const remainingMinutes = Math.floor(remainingMilliseconds / (1000 * 60));
+      const remainingSeconds = Math.floor(
+        (remainingMilliseconds % (1000 * 60)) / 1000
+      );
+      return res.status(404).json({
+        message: `Your account is banned. Come back after ${remainingMinutes} minutes and ${remainingSeconds} seconds.`,
+        status: "fail",
+        data: {},
+      });
+    }
+
+    if (user.isFrozen === true) {
+      await User.findByIdAndUpdate(
+        user._id,
+        {
+          isFrozen: false,
+        },
+        { new: true }
+      );
+    }
+    res.status(200).json({
+      data: {
+        id: formatObj(user).id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+      },
+      token: user.generateToken(),
+      message: "User logged in successfully",
+      status: "success",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message || "Internal server error",
+      status: "fail",
+      data: {},
+    });
+  }
+};
+
+const freezeAccount = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+
+    if (!user) {
+      res.status(404).json({
+        message: "User not found",
+        status: "fail",
+        data: {},
+      });
+    }
+
+    const freeze = await User.findByIdAndUpdate(
+      id,
+      {
+        isFrozen: true,
+      },
+      { new: true }
+    );
+
+    res.status(200).json({
+      message: "User account successfully freezed",
+      status: "success",
+      data: formatObj(freeze),
+    });
+  } catch (error) {
     console.error(error);
+    res.status(500).json({
+      message: error.message || "Internal server error",
+      status: "fail",
+      data: {},
+    });
+  }
+};
+
+const unFreezeAccount = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+
+    if (!user) {
+      res.status(404).json({
+        message: "User not found",
+        status: "fail",
+        data: {},
+      });
+    }
+
+    const unFreeze = await User.findByIdAndUpdate(
+      id,
+      {
+        isFrozen: false,
+      },
+      { new: true }
+    );
+
+    res.status(200).json({
+      message: "User account successfully freezed",
+      status: "success",
+      data: formatObj(unFreeze),
+    });
+  } catch (error) {
     res.status(500).json({
       message: error.message || "Internal server error",
       status: "fail",
@@ -193,4 +336,7 @@ module.exports = {
   getByToken,
   userRegister,
   verifyAccount,
+  userLogin,
+  freezeAccount,
+  unFreezeAccount,
 };

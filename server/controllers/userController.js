@@ -330,6 +330,81 @@ const unFreezeAccount = async (req, res) => {
   }
 };
 
+const banAccount = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { duration } = req.body;
+
+    const banExpiresAt = new Date(Date.now() - duration * 1000 * 60);
+    const user = await User.findById(id);
+
+    if (!user) {
+      res.status(404).json({
+        message: "User not found!",
+        status: "fail",
+        data: {},
+      });
+    }
+
+    const updatedData = await User.findByIdAndUpdate(
+      id,
+      {
+        isBanned: true,
+        banExpiresAt: banExpiresAt,
+      },
+      { new: true }
+    );
+
+    res.status(200).json({
+      message: `User banned for ${duration} minutes`,
+      status: "success",
+      data: formatObj(updatedData),
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message || "Internal server error",
+      status: "fail",
+      data: {},
+    });
+  }
+};
+
+const unBanAccount = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+
+    if (!user) {
+      res.status(404).json({
+        message: "User not found",
+        status: "fail",
+        data: {},
+      });
+    }
+
+    const unBanUser = await User.findByIdAndUpdate(
+      id,
+      {
+        isBanned: false,
+        banExpiresAt: null,
+      },
+      { new: true }
+    );
+
+    res.status(200).json({
+      message: "User successfully unbanned",
+      status: "success",
+      data: formatObj(unBanUser),
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message || "Internal server error",
+      status: "fail",
+      data: {},
+    });
+  }
+};
+
 module.exports = {
   getAllNotDeletedUsers,
   getById,
@@ -339,4 +414,6 @@ module.exports = {
   userLogin,
   freezeAccount,
   unFreezeAccount,
+  banAccount,
+  unBanAccount,
 };

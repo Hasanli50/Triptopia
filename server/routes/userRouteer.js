@@ -9,6 +9,8 @@ const {
   userLogin,
   freezeAccount,
   unFreezeAccount,
+  banAccount,
+  unBanAccount,
 } = require("../controllers/userController.js");
 const imageUpload = require("../config/profileImageMulter.js");
 
@@ -20,5 +22,7 @@ router.post("/verify-account", verifyAccount);
 router.post("/user-login", userLogin);
 router.patch("/freeze-account/:id", freezeAccount);
 router.patch("/unfreeze-account/:id", unFreezeAccount);
+router.patch("/banned-account/:id", banAccount);
+router.patch("/unbanned-account/:id", unBanAccount);
 
 module.exports = router;

@@ -11,6 +11,7 @@ const {
   unFreezeAccount,
   banAccount,
   unBanAccount,
+  deleteAccount,
 } = require("../controllers/userController.js");
 const imageUpload = require("../config/profileImageMulter.js");
 
@@ -24,5 +25,6 @@ router.patch("/freeze-account/:id", freezeAccount);
 router.patch("/unfreeze-account/:id", unFreezeAccount);
 router.patch("/banned-account/:id", banAccount);
 router.patch("/unbanned-account/:id", unBanAccount);
+router.delete("/delete-account/:id", deleteAccount);
 
 module.exports = router;

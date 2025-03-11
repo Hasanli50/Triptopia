@@ -8,7 +8,10 @@ const client = new twilio(
   process.env.TWILIO_AUTH_TOKEN
 );
 const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
-const {extractPublicId} = require("../utils/publicId.js");
+const { extractPublicId } = require("../utils/publicId.js");
+const transporter = require("../config/nodemailer.js");
+const USER_MAIL = process.env.USER_MAIL;
+const bcrypt = require("bcrypt");
 
 // users
 const getAllNotDeletedUsers = async (req, res) => {
@@ -457,6 +460,202 @@ const deleteAccount = async (req, res) => {
   }
 };
 
+const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found!",
+        status: "fail",
+        data: {},
+      });
+    }
+
+    const token = user.generateToken();
+
+    transporter
+      .sendMail({
+        from: USER_MAIL,
+        to: email,
+        subject: "Triptopiaforgot password | Triptopia",
+        html: `<p>If you wwant change your password, click to <a href="http://localhost:8080/users/reset-password/${token}" >here</a></p>`,
+      })
+      .catch((error) => {
+        console.log("error: ", error);
+      });
+
+    res.status(200).json({
+      message: "User successfully found",
+      status: "success",
+      data: token,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message || "Internal server error",
+      status: "fail",
+      data: {},
+    });
+  }
+};
+
+const resetPassword = async (req, res) => {
+  try {
+    const { token } = req.params;
+    const { id } = req.user;
+    const { password, confirmPass } = req.body;
+
+    if (password !== confirmPass) {
+      return res.status(404).json({
+        message: "Passwords must be same!",
+        status: "fail",
+        data: {},
+      });
+    }
+
+    if (!token) {
+      return res.status(400).json({
+        message: "Token is required",
+        status: "fail",
+      });
+    }
+    if (!password || !confirmPass) {
+      return res.status(400).json({
+        message: "Both password and confirmPass are required",
+        status: "fail",
+      });
+    }
+    const user = await User.findById(id, { isDeleted: false });
+
+    if (!user) {
+      res.status(404).json({
+        message: "User not found!",
+        status: "fail",
+        data: {},
+      });
+    }
+
+    const updatePass = await User.findByIdAndUpdate(
+      id,
+      {
+        password: await bcrypt.hash(password, 10),
+      },
+      { new: true }
+    ).select("-password");
+
+    res.status(200).json({
+      message: "User password successfully updated!",
+      status: "success",
+      data: updatePass,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message || "Internal server error",
+      status: "fail",
+      data: {},
+    });
+  }
+};
+
+const updateUserInfo = async (req, res) => {
+  try {
+    const { id } = req.user;
+    const { username, email, phone_number } = req.body;
+
+    const sentUser = {
+      username,
+      email,
+      phone_number,
+    };
+
+    if (req.file) {
+      sentUser.profile_image = req.file.path;
+    }
+
+    const prevUser = await User.findById(id);
+
+    if (!prevUser) {
+      return res.status(404).json({
+        message: "User not found",
+        status: "fail",
+      });
+    }
+
+    const updateUser = await User.findByIdAndUpdate(id, sentUser, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (req.file) {
+      const publicId = extractPublicId(prevUser);
+      await cloudinary.uploader.destroy(`uploads/${publicId}`, (error) => {
+        if (error) throw new Error("Failed to delete image from Cloudinary");
+      });
+    }
+
+    return res.status(200).json({
+      data: formatObj(updateUser),
+      message: "User updated successfully",
+      status: "success",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message || "Internal server error",
+      status: "fail",
+      data: {},
+    });
+  }
+};
+
+const updatePassword = async (req, res) => {
+  try {
+    const { password, confirmPass } = req.body;
+    const { id } = req.params;
+
+    if (password !== confirmPass) {
+      return res.status(400).json({
+        message: "Passwords do not match",
+        status: "fail",
+      });
+    }
+    const user = await User.findById(id, { isDeleted: false });
+
+    if (!user) {
+      res.status(404).json({
+        message: "User not found!",
+        status: "fail",
+        data: {},
+      });
+    }
+
+    const isSamePassword = await bcrypt.compare(password, user.password);
+
+    if (isSamePassword) {
+      return res.status(400).json({
+        message: "New password must be different from the current password",
+        status: "fail",
+      });
+    }
+
+    const updatedPass = await User.findByIdAndUpdate(id, {
+      password: await bcrypt.hash(password, 10),
+    }).select("-password");
+
+    res.status(200).json({
+      message: "User password successfully updated!",
+      status: "success",
+      data: updatedPass,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message || "Internal server error",
+      status: "fail",
+      data: {},
+    });
+  }
+};
+
 module.exports = {
   getAllNotDeletedUsers,
   getById,
@@ -469,4 +668,8 @@ module.exports = {
   banAccount,
   unBanAccount,
   deleteAccount,
+  forgotPassword,
+  resetPassword,
+  updateUserInfo,
+  updatePassword,
 };

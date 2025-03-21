@@ -19,6 +19,7 @@ const tourSchema = new Schema(
       rating: { type: Number, default: 0, min: 0, max: 5 },
     },
     userIds: { type: [Schema.Types.ObjectId], ref: "User" },
+    reviewIds: { type: [Schema.Types.ObjectId], ref: "Review" },
     number_of_people: { type: Number, default: 0 },
     max_group_size: { type: Number, required: true },
     min_group_size: { type: Number, min: 0, default: 1 },

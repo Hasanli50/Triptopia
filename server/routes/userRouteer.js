@@ -16,29 +16,57 @@ const {
   resetPassword,
   updateUserInfo,
   updatePassword,
+  hostRegister,
+  verifyHostAccount,
+  saveFcmToken,
 } = require("../controllers/userController.js");
 const imageUpload = require("../config/profileImageMulter.js");
 const { verifyToken } = require("../config/verifyToken.js");
+const userRegisterValidator = require("../middlewares/userRegister.js");
+const verifyAccountValidator = require("../middlewares/verifyAccount.js");
+const forgotPassValidator = require("../middlewares/forgotPass.js");
+const updatePassValidator = require("../middlewares/updatePassword.js");
+const resetPassValidator = require("../middlewares/resetPass.js");
+const updateUserInfoValidator = require("../middlewares/updateUserInfo.js");
 
 router.get("/", getAllNotDeletedUsers);
 router.get("/:id", getById);
 router.get("/:token", getByToken);
-router.post("/", imageUpload.single("profile_image"), userRegister);
-router.post("/verify-account", verifyAccount);
+router.post(
+  "/",
+  imageUpload.single("profile_image"),
+  userRegisterValidator,
+  userRegister
+);
+router.post(
+  "/host",
+  imageUpload.single("profile_image"),
+  userRegisterValidator,
+  hostRegister
+);
+router.patch("/verify-account-host/:id", verifyHostAccount);
+router.post("/verify-account", verifyAccountValidator, verifyAccount);
 router.post("/user-login", userLogin);
 router.patch("/freeze-account/:id", freezeAccount);
 router.patch("/unfreeze-account/:id", unFreezeAccount);
 router.patch("/banned-account/:id", banAccount);
 router.patch("/unbanned-account/:id", unBanAccount);
 router.delete("/delete-account/:id", deleteAccount);
-router.post("/forgot-password", forgotPassword);
-router.post("/reset-password/:token", verifyToken, resetPassword);
+router.post("/forgot-password", forgotPassValidator, forgotPassword);
+router.post(
+  "/reset-password/:token",
+  verifyToken,
+  resetPassValidator,
+  resetPassword
+);
 router.patch(
   "/user-info/:id",
   verifyToken,
+  updateUserInfoValidator,
   imageUpload.single("profile_image"),
   updateUserInfo
 );
-router.patch("/update-password/:id", updatePassword);
+router.patch("/update-password/:id", updatePassValidator, updatePassword);
+router.post("/save-fcm-token", saveFcmToken);
 
 module.exports = router;

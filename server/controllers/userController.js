@@ -43,7 +43,11 @@ const getAllNotDeletedUsers = async (req, res) => {
 const getById = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await User.findById(id, { isDeleted: false }, { password: 0 });
+    const user = await User.findById(
+      id,
+      { isDeleted: false },
+      { password: 0 }
+    ).populate("travel_history");
 
     if (!user) {
       res.status(404).json({
@@ -121,6 +125,7 @@ const userRegister = async (req, res) => {
       username,
       password,
       email,
+      role: "user",
       phone_number,
       profile_image: req.file.path,
       isVerified: false,
@@ -132,6 +137,48 @@ const userRegister = async (req, res) => {
       body: `Your verification code is: ${verificationCode}`,
       from: twilioPhoneNumber,
       to: phoneNumberToVerify,
+    });
+
+    await newUser.save();
+
+    res.status(200).json({
+      message:
+        "User successfully created and verification code sent to your phone!",
+      status: "success",
+      data: formatObj(newUser),
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: error.message || "Internal server error",
+      status: "fail",
+      data: {},
+    });
+  }
+};
+
+// Host registration route
+const hostRegister = async (req, res) => {
+  try {
+    const { username, password, email, phone_number } = req.body;
+
+    const duplicate = await User.findOne({ $or: [{ email }, { username }] });
+    if (duplicate) {
+      return res.status(404).json({
+        message: "Username or email already exists!",
+        status: "fail",
+        data: {},
+      });
+    }
+
+    const newUser = new User({
+      username,
+      password,
+      email,
+      role: "host",
+      phone_number,
+      profile_image: req.file.path,
+      isVerified: false,
     });
 
     await newUser.save();
@@ -182,6 +229,42 @@ const verifyAccount = async (req, res) => {
         data: {},
       });
     }
+  } catch (error) {
+    res.status(500).json({
+      message: error.message || "Internal server error",
+      status: "fail",
+      data: {},
+    });
+  }
+};
+
+const verifyHostAccount = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const user = await User.findById({ _id: id, role: "host" });
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found!",
+        status: "fail",
+        data: {},
+      });
+    }
+
+    const updatedData = await User.findByIdAndUpdate(
+      id,
+      {
+        isVerified: true,
+      },
+      { new: true }
+    );
+
+    res.status(200).json({
+      message: "Verification successful!",
+      status: "success",
+      data: updatedData,
+    });
   } catch (error) {
     res.status(500).json({
       message: error.message || "Internal server error",
@@ -656,6 +739,37 @@ const updatePassword = async (req, res) => {
   }
 };
 
+const saveFcmToken = async (req, res) => {
+  try {
+    const { id } = req.user;
+    const { token } = req.body;
+
+    const user = await User.findById(id);
+    if (!user) {
+      res.status(404).json({
+        message: "User not found",
+        status: "fail",
+        data: {},
+      });
+    }
+
+    user.fcmToken = token;
+    await user.save();
+
+    res.status(200).json({
+      message: "User fcmtoken successfullt saved!",
+      status: "success",
+      data: formatObj(user),
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message || "Internal server error",
+      status: "fail",
+      data: {},
+    });
+  }
+};
+
 module.exports = {
   getAllNotDeletedUsers,
   getById,
@@ -672,4 +786,7 @@ module.exports = {
   resetPassword,
   updateUserInfo,
   updatePassword,
+  hostRegister,
+  verifyHostAccount,
+  saveFcmToken,
 };

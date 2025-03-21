@@ -28,6 +28,7 @@ const userSchema = new Schema(
     },
     profile_image: { type: String, required: true },
     earnings: { type: Number, min: 0, default: 0 },
+    fcmToken: { type: String },
     phone_number: {
       type: String,
       match: /^\+(\d{1,4})\s?(\d{1,15})$/,
@@ -35,16 +36,11 @@ const userSchema = new Schema(
     favorites: {
       type: [Schema.Types.ObjectId],
       ref: "Tour",
+      default: [],
     },
     travel_history: {
-      type: [
-        {
-          tourId: { type: Schema.Types.ObjectId, ref: "Tour" },
-          rating: { type: Number, default: 0, min: 0, max: 5 },
-          date: { type: Date, default: Date.now },
-          review: { type: String, default: "" },
-        },
-      ],
+      type: [Schema.Types.ObjectId],
+      ref: "Review",
       default: [],
     },
     isFrozen: {

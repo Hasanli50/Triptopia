@@ -56,7 +56,7 @@ const createNotificationAndSendPush = async (req, res) => {
       data: formatObj(newNotification),
     });
   } catch (err) {
-    req.status(500).json({
+    res.status(500).json({
       message: error.message,
       status: "fail",
       data: {},
@@ -83,10 +83,15 @@ const deleteNotification = async (req, res) => {
       data: {},
     });
   } catch (error) {
-    req.status(500).json({
+    res.status(500).json({
       message: error.message,
       status: "fail",
       data: {},
     });
   }
+};
+
+module.exports = {
+  createNotificationAndSendPush,
+  deleteNotification,
 };

@@ -21,7 +21,7 @@ const getById = async (req, res) => {
       data: formatObj(booking),
     });
   } catch (error) {
-    req.status(500).json({
+    res.status(500).json({
       message: error.messsage,
       status: "fail",
       data: {},
@@ -123,4 +123,10 @@ const updateBooking = async (req, res) => {
       data: {},
     });
   }
+};
+
+module.exports = {
+  getById,
+  createBooking,
+  updateBooking,
 };

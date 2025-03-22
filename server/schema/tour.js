@@ -11,7 +11,7 @@ const tourSchema = new Schema(
     duration: { type: Number, min: 0 },
     available_dates: [{ type: Date }],
     itinerary: [{ type: String }],
-    images: { type: [String], required: true },
+    images: { type: [String], required: true, minItems: 0, maxItems: 10 },
     tour_guide: {
       name: { type: String, required: true },
       bio: { type: String, default: "" },

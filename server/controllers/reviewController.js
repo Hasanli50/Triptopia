@@ -195,3 +195,11 @@ const getById = async (req, res) => {
     });
   }
 };
+
+module.exports = {
+  creaateReview,
+  updateReview,
+  deleteReview,
+  getAllReview,
+  getById,
+};

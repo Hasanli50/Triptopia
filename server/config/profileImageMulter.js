@@ -4,7 +4,7 @@ const { storage: cloudinaryStorage } = require("./profileImageCloudinary");
 
 const imageUpload = multer({
   storage: cloudinaryStorage,
-  limits: { fileSize: 5 * 1024 * 1024 },
+  limits: { fileSize: 10 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
     const allowedTypes = /jpeg|jpg|png|gif/;
     const mimeType = allowedTypes.test(file.mimetype);

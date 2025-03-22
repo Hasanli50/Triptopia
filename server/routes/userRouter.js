@@ -22,12 +22,12 @@ const {
 } = require("../controllers/userController.js");
 const imageUpload = require("../config/profileImageMulter.js");
 const { verifyToken } = require("../config/verifyToken.js");
-const userRegisterValidator = require("../middlewares/userRegister.js");
-const verifyAccountValidator = require("../middlewares/verifyAccount.js");
-const forgotPassValidator = require("../middlewares/forgotPass.js");
-const updatePassValidator = require("../middlewares/updatePassword.js");
-const resetPassValidator = require("../middlewares/resetPass.js");
-const updateUserInfoValidator = require("../middlewares/updateUserInfo.js");
+const userRegisterValidator = require("../middlewares/user/userRegister.js");
+const verifyAccountValidator = require("../middlewares/user/verifyAccount.js");
+const forgotPassValidator = require("../middlewares/user/forgotPass.js");
+const updatePassValidator = require("../middlewares/user/updatePassword.js");
+const resetPassValidator = require("../middlewares/user/resetPass.js");
+const updateUserInfoValidator = require("../middlewares/user/updateUserInfo.js");
 
 router.get("/", getAllNotDeletedUsers);
 router.get("/:id", getById);

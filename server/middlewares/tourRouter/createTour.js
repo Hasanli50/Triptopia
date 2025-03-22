@@ -55,24 +55,22 @@ const createTourValidation = [
     .isArray()
     .withMessage("Itinerary must be an array."),
 
-  body("tour_guide")
-    .notEmpty()
-    .withMessage("Tour guide details are required.")
-    .custom((value) => {
-      if (!value.name || value.name.trim() === "") {
-        throw new Error("Tour guide name is required.");
-      }
-      if (value.languages_spoken && !Array.isArray(value.languages_spoken)) {
-        throw new Error("Languages spoken should be an array.");
-      }
-      if (value.rating && (value.rating < 0 || value.rating > 5)) {
-        throw new Error("Tour guide rating must be between 0 and 5.");
-      }
-      if (!value.bio || value.bio.trim() === "") {
-        throw new Error("Tour guide bio is required.");
-      }
-      return true;
-    }),
+  // Tour guide validation
+  body("tour_guide").custom((value) => {
+    if (!value || !value.name || value.name.trim() === "") {
+      throw new Error("Tour guide name is required.");
+    }
+    if (value.languages_spoken && !Array.isArray(value.languages_spoken)) {
+      throw new Error("Languages spoken should be an array.");
+    }
+    if (value.rating && (value.rating < 0 || value.rating > 5)) {
+      throw new Error("Tour guide rating must be between 0 and 5.");
+    }
+    if (!value.bio || value.bio.trim() === "") {
+      throw new Error("Tour guide bio is required.");
+    }
+    return true;
+  }),
 
   body("max_group_size")
     .notEmpty()

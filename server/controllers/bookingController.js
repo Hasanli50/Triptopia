@@ -111,10 +111,18 @@ const updateBooking = async (req, res) => {
       await tour.save();
     }
 
+    if (status === "confirmed") {
+      if (!tour.userIds.includes(updateBooking.userId)) {
+        tour.userIds.push(updateBooking.userId);
+      }
+
+      await tour.save();
+    }
+
     res.status(200).json({
       message: "Booking successfully updated!",
       status: "success",
-      data: updateBooking,
+      data: formatObj(updateBooking),
     });
   } catch (error) {
     res.status(500).json({

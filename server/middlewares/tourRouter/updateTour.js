@@ -72,8 +72,8 @@ const updateTourValidation = [
     .optional()
     .custom((value) => {
       if (value) {
-        if (!value.name || value.name.trim() === "") {
-          throw new Error("Tour guide name is required.");
+        if (value.name && typeof value.name !== "string") {
+          throw new Error("Tour guide name must be a string.");
         }
         if (value.languages_spoken && !Array.isArray(value.languages_spoken)) {
           throw new Error("Languages spoken should be an array.");
@@ -81,8 +81,8 @@ const updateTourValidation = [
         if (value.rating && (value.rating < 0 || value.rating > 5)) {
           throw new Error("Tour guide rating must be between 0 and 5.");
         }
-        if (!value.bio || value.bio.trim() === "") {
-          throw new Error("Tour guide bio is required.");
+        if (value.bio && typeof value.bio !== "string") {
+          throw new Error("Tour guide bio must be a string.");
         }
       }
       return true;

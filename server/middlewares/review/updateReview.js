@@ -3,8 +3,10 @@ const { body, validationResult } = require("express-validator");
 const updateReviewValidator = [
   body("rating")
     .optional()
-    .min(1, "Rating must be least 1 rating")
-    .max(1, "Rating must be max 5 rating"),
+    .isLength({ min: 1 })
+    .withMessage("Rating must be min 5 rating")
+    .isLength({ max: 5 })
+    .withMessage("Rating must be max 5 rating"),
   body("review")
     .optional()
     .isLength({ max: 500 })

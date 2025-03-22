@@ -7,7 +7,6 @@ const createCategoryValidator = [
     .isLength({ min: 3 })
     .withMessage("Name must be at least 3 characters long.")
     .trim(),
-  ,
   body("description")
     .notEmpty()
     .withMessage("Description cannot be empty.")

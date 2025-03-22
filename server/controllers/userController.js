@@ -242,7 +242,7 @@ const verifyHostAccount = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const user = await User.findById({ _id: id, role: "host" });
+    const user = await User.findOne({ _id: id, role: "host" });
 
     if (!user) {
       return res.status(404).json({

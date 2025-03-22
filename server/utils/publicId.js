@@ -3,4 +3,9 @@ function extractPublicId(obj) {
   return publicId;
 }
 
-module.exports = { extractPublicId };
+function extractPublicIdImages(imageUrl) {
+  const publicId = imageUrl.split("/").reverse()[0].split(".")[0];
+  return publicId;
+}
+
+module.exports = { extractPublicId, extractPublicIdImages };

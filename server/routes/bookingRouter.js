@@ -5,9 +5,10 @@ const {
   createBooking,
   updateBooking,
 } = require("../controllers/bookingController.js");
+const { verifyToken } = require("../config/verifyToken.js");
 
-router.get("/:id", getById);
-router.post("/", createBooking);
-router.patch("/:id", updateBooking);
+router.get("/:id", getById); //+
+router.post("/", verifyToken, createBooking); //+
+router.patch("/:id", updateBooking); //+
 
 module.exports = router;

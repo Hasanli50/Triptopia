@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 const tourSchema = new Schema(
   {
     categoryId: { type: Schema.Types.ObjectId, ref: "Category" },
+    userId: { type: Schema.Types.ObjectId, ref: "User" },
     title: { type: String, required: true },
     description: { type: String, required: true },
     price: { type: Number, min: 0, required: true },
@@ -13,9 +14,9 @@ const tourSchema = new Schema(
     itinerary: [{ type: String }],
     images: { type: [String], required: true, minItems: 0, maxItems: 10 },
     tour_guide: {
-      name: { type: String, required: true },
-      bio: { type: String, default: "" },
-      languages_spoken: { type: [String], default: [] },
+      name: { type: String },
+      bio: { type: String },
+      languages_spoken: { type: [String] },
       rating: { type: Number, default: 0, min: 0, max: 5 },
     },
     userIds: { type: [Schema.Types.ObjectId], ref: "User" },

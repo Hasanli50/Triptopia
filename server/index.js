@@ -8,6 +8,7 @@ const tourRouter = require("./routes/tourRouter.js");
 const bookingRouter = require("./routes/bookingRouter.js");
 const reviewRouter = require("./routes/reviewRouter.js");
 const notificationRouter = require("./routes/notificationRouter.js");
+const cantactRouter = require("./routes/contactRouter.js");
 const connectToDb = require("./config/db.js");
 var cors = require("cors");
 
@@ -25,6 +26,7 @@ app.use("/tours", tourRouter);
 app.use("/bookings", bookingRouter);
 app.use("/reviews", reviewRouter);
 app.use("/notifications", notificationRouter);
+app.use("/contacts", cantactRouter);
 
 connectToDb();
 

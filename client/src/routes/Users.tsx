@@ -5,6 +5,7 @@ import AboutUs from "../components/AboutUs";
 import OurServices from "../components/OurServices";
 import Privacy_Policy from "../components/Privacy_Policy";
 import Terms_Conditions from "../components/Terms_Conditions";
+import Header from "../components/user/Header";
 
 const Users = () => {
   return (
@@ -16,6 +17,7 @@ const Users = () => {
         <Route path="our-services" element={<OurServices />} />
         <Route path="privacy-policy" element={<Privacy_Policy />} />
         <Route path="terms-conditions" element={<Terms_Conditions />} />
+        <Route path="header" element={<Header />} />
       </Routes>
     </>
   );

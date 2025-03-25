@@ -1,0 +1,61 @@
+@use "../../scss/variables" as *;
+@use "../../scss/extends" as ext;
+
+.header{
+    position: fixed; /* So it stays at the top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #fff;
+}
+.headerBox{
+    width: 80%;
+    margin: auto;
+    padding: 1% 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+.imgBox {
+  cursor: pointer;
+}
+.unorderList {
+  display: flex;
+  gap: 20px;
+  list-style-type: none;
+  text-transform: capitalize;
+  font-size: 16px;
+}
+.link {
+  text-decoration: none;
+}
+.item {
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  color: $heading-color;
+}
+.item:hover {
+  color: $secondary-color;
+}
+.btnBox {
+  display: flex;
+  gap: 10px;
+}
+.btn {
+  padding: 7px 21px;
+  font-size: 16px;
+  border-radius: 50px;
+  cursor: pointer;
+  border: none;
+  background-color: #fff;
+  color: $text-color;
+  transition: 0.3s ease-in-out;
+  text-transform: capitalize;
+}
+.btn:hover {
+  background-color: $secondary-color;
+  border-color: $secondary-color;
+  color: #fff;
+}

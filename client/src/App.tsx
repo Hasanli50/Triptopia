@@ -1,12 +1,15 @@
 import "./App.css";
-import ContactUs from "./components/ContactUs";
+import Users from "./routes/Users";
+import { Routes, Route } from "react-router";
 
 function App() {
   return (
     <>
-    <ContactUs/>
+      <Routes>
+        <Route path="/*" element={<Users />} />
+      </Routes>
     </>
-  )
+  );
 }
 
 export default App;

@@ -1,0 +1,8 @@
+@use "./variables" as *;
+
+%heading {
+  text-transform: uppercase;
+  color: $secondary-color;
+  font-size: 20px;
+  margin-bottom: 20px;
+}

@@ -1,0 +1,43 @@
+@use "../scss/variables" as *;
+@use "../scss/extends" as ext;
+
+.termsConditions     {
+  width: 80%;
+  margin: auto;
+  padding: 4% 0;
+  text-align: justify;
+}
+.heading {
+  text-transform: uppercase;
+  color: $secondary-color;
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+.update {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+.sentence {
+  font-size: 16px;
+  color: $heading-color;
+  line-height: 25px;
+  margin-bottom: 10px;
+}
+.orderList {
+  list-style-type: decimal;
+  margin-left: 19px;
+}
+.unorderList {
+  list-style-type: disc;
+  margin-left: 15px;
+}
+.itemHead {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: $heading-color;
+  line-height: 25px;
+}
+.describe {
+  color: #000;
+  font-weight: 700;
+}

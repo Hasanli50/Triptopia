@@ -1,6 +1,6 @@
 import React from "react";
-import style from "../../assets/style/user/login.module.scss";
-import airplane from "../../assets/photo/freepik__upload__54828.png";
+import style from "../../assets/style/user/register.module.scss";
+import registerImg from "../../assets/photo/freepik__upload__61111.png";
 import googleIcon from "../../assets/icons/Google__G__Logo.svg";
 import appleIcon from "../../assets/icons/Icon awesome-apple.svg";
 import facebookIcon from "../../assets/icons/XMLID_22_.svg";
@@ -10,22 +10,46 @@ import PlaneVector from "../../assets/photo/plane-vector.png";
 import Grid from "@mui/material/Grid";
 import { Link } from "react-router";
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
   return (
     <>
-      <section className={style.login}>
+      <section className={style.register}>
         <Grid container spacing={5}>
           <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
             <div className={style.imgBox}>
-              <img className={style.img} src={airplane} alt="airplane" />
+              <img
+                className={style.img}
+                src={registerImg}
+                alt="registerImage"
+              />
             </div>
           </Grid>
           <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
             <div className={style.box}>
-              <h2 className={style.heading}>welcome</h2>
-              <p className={style.loginWithEmail}>Login with Email</p>
+              <h2 className={style.heading}>create an account</h2>
+              <p className={style.agreeWithCondition}>
+                By creating an account, you agree to our{" "}
+                <span style={{ color: "#FAA935" }}>Privacy policy</span> and{" "}
+                <span style={{ color: "#FAA935" }}>Terms of use</span>.
+              </p>
 
               <form className={style.form}>
+                <div className={style.inputBox}>
+                  <input
+                    type="text"
+                    className={`${style.input} ${style.username}`}
+                    placeholder="Enter Username"
+                  />
+
+                  <input
+                    className={`${style.input} ${style.phoneNumber}`}
+                    type="tel"
+                    pattern="\+994 [0-9]{2} [0-9]{3} [0-9]{2} [0-9]{2}"
+                    placeholder="Mobile Number"
+                    title="Please enter the phone number in the format: +994703454545"
+                  />
+                </div>
+
                 <input
                   className={`${style.input} ${style.email}`}
                   type="email"
@@ -37,10 +61,8 @@ const Login: React.FC = () => {
                   type="password"
                   placeholder="Enter Password"
                 />
-                <Link to={"/forgot-password"} className={style.link}>
-                  <p className={style.forgotPass}>Forgot your password?</p>
-                </Link>
-                <button className={style.submitBtn}>login</button>
+
+                <button className={style.submitBtn}>create account</button>
               </form>
 
               <p className={style.or}>or</p>
@@ -89,4 +111,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default Register;

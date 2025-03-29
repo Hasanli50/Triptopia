@@ -5,6 +5,7 @@ import Privacy_Policy from "../components/Privacy_Policy";
 import Terms_Conditions from "../components/Terms_Conditions";
 import UserLayout from "../layouts/UserLayout";
 import Login from "../components/user/Login";
+import Register from "../components/user/Register";
 
 const Users: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const Users: React.FC = () => {
         <Route path="privacy-policy" element={<Privacy_Policy />} />
         <Route path="terms-conditions" element={<Terms_Conditions />} />
         <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
       </Route>
     </Routes>
   );

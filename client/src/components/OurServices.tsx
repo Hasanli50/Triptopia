@@ -2,16 +2,18 @@ import style from "../assets/style/our-services.module.scss";
 import Group688 from "../assets/photo/Group688.png";
 import Vector from "../assets/photo/Vector.png";
 import PlaneVector from "../assets/photo/plane-vector.png";
+import React from "react";
 
-const OurServices = () => {
+const OurServices: React.FC = () => {
   return (
     <>
       <section className={style.ourServices}>
         <p className={style.heading}>our services</p>
         <p className={style.sentence}>
-          At <span style={{ color: "#faa935", cursor: "pointer" }}>Triptopia</span>, we offer a
-          suite of services to make your travel planning and experience smooth
-          and hassle-free:
+          At{" "}
+          <span style={{ color: "#faa935", cursor: "pointer" }}>Triptopia</span>
+          , we offer a suite of services to make your travel planning and
+          experience smooth and hassle-free:
         </p>
 
         <ul className={style.list}>

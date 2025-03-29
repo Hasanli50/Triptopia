@@ -1,25 +1,30 @@
 @use "../../scss/variables" as *;
 @use "../../scss/extends" as ext;
 
-.header{
-    position: fixed; /* So it stays at the top */
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    background-color: #fff;
+.header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: #fff;
+  box-shadow: rgba(250, 169, 53, 0.1) 0px 4px 12px;
 }
-.headerBox{
-    width: 80%;
-    margin: auto;
-    padding: 1% 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
+.headerBox {
+  width: 80%;
+  margin: auto;
+  padding: 1% 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .imgBox {
   cursor: pointer;
+}
+.nav {
+  @media only screen and (max-width: 600px) {
+    display: none;
+  }
 }
 .unorderList {
   display: flex;
@@ -30,6 +35,7 @@
 }
 .link {
   text-decoration: none;
+  color: $heading-color;
 }
 .item {
   cursor: pointer;
@@ -42,6 +48,9 @@
 .btnBox {
   display: flex;
   gap: 10px;
+  @media only screen and (max-width: 800px) {
+    display: none;
+  }
 }
 .btn {
   padding: 7px 21px;
@@ -50,7 +59,7 @@
   cursor: pointer;
   border: none;
   background-color: #fff;
-  color: $text-color;
+  color: $heading-color;
   transition: 0.3s ease-in-out;
   text-transform: capitalize;
 }
@@ -58,4 +67,10 @@
   background-color: $secondary-color;
   border-color: $secondary-color;
   color: #fff;
+}
+.menu {
+  display: none;
+  @media only screen and (max-width: 800px) {
+    display: block;
+  }
 }

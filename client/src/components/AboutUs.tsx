@@ -4,8 +4,9 @@ import Grid from "@mui/material/Grid";
 import Group688 from "../assets/photo/Group688.png";
 import Vector from "../assets/photo/Vector.png";
 import PlaneVector from "../assets/photo/plane-vector.png";
+import React from "react";
 
-const AboutUs = () => {
+const AboutUs: React.FC = () => {
   return (
     <>
       <section className={style.aboutUs}>

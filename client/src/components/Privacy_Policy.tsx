@@ -1,6 +1,7 @@
+import React from "react";
 import style from "../assets/style/privacy-policy.module.scss";
 
-const Privacy_Policy = () => {
+const Privacy_Policy: React.FC = () => {
   return (
     <>
       <section className={style.privacyPolicy}>

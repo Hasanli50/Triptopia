@@ -1,5 +1,5 @@
 import style from "../assets/style/footer.module.scss";
-import logo from "../assets/photo/logo-light.png";
+import logo from "../assets/photo/logo-dark.png";
 import galleryImg1 from "../assets/photo/gallery-img-1.png";
 import galleryImg2 from "../assets/photo/gallery-img-2.png";
 import galleryImg3 from "../assets/photo/gallery-img-3.png";
@@ -14,10 +14,13 @@ import CallIcon from "@mui/icons-material/Call";
 import EmailIcon from "@mui/icons-material/Email";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Link } from "react-router";
+import ContactUs from "./ContactUs";
+import React from "react";
 
-const Footer = () => {
+const Footer: React.FC = () => {
   return (
     <>
+      <ContactUs />
       <section className={style.footer}>
         <div className={style.footer__box}>
           <div className={style.footer__box__first}>

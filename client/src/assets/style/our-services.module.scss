@@ -4,14 +4,11 @@
 .ourServices {
   width: 80%;
   margin: auto;
-  padding: 4% 0;
+  padding: 2% 0;
   position: relative;
 }
 .heading {
-  text-transform: uppercase;
-  color: $secondary-color;
-  font-size: 20px;
-  margin-bottom: 30px;
+  @extend %heading;
 }
 .sentence {
   font-size: 20px;

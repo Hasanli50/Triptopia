@@ -1,25 +1,22 @@
 import { Routes, Route } from "react-router";
-import ContactUs from "../components/ContactUs";
-import Footer from "../components/Footer";
 import AboutUs from "../components/AboutUs";
 import OurServices from "../components/OurServices";
 import Privacy_Policy from "../components/Privacy_Policy";
 import Terms_Conditions from "../components/Terms_Conditions";
-import Header from "../components/user/Header";
+import UserLayout from "../layouts/UserLayout";
+import Login from "../components/user/Login";
 
-const Users = () => {
+const Users: React.FC = () => {
   return (
-    <>
-      <Routes>
-        <Route path="contact-us" element={<ContactUs />} />
-        <Route path="footer" element={<Footer />} />
+    <Routes>
+      <Route element={<UserLayout />}>
         <Route path="about-us" element={<AboutUs />} />
         <Route path="our-services" element={<OurServices />} />
         <Route path="privacy-policy" element={<Privacy_Policy />} />
         <Route path="terms-conditions" element={<Terms_Conditions />} />
-        <Route path="header" element={<Header />} />
-      </Routes>
-    </>
+        <Route path="login" element={<Login />} />
+      </Route>
+    </Routes>
   );
 };
 

@@ -1,7 +1,7 @@
 @use "../scss/variables" as *;
 
 .footer {
-  background-color: $dark-blue-color;
+  background-color: #fff  ;
   padding: 4% 0;
   &__box {
     width: 80%;
@@ -21,8 +21,8 @@
 }
 .sentence {
   width: 269px;
-  color: $text-second-color;
-  font-size: 15px;
+  color: $text-color;
+  font-size: 17px;
   line-height: 25px;
   word-spacing: 2px;
   margin-bottom: 20px;
@@ -47,7 +47,7 @@
   margin-bottom: 30px;
 }
 .heading {
-  color: #fff;
+  color: $heading-color;
   font-size: 25px;
   margin-bottom: 16px;
   cursor: pointer;
@@ -56,8 +56,8 @@
   text-decoration: none;
 }
 .item {
-  color: $text-second-color;
-  font-size: 15px;
+  color: $text-color;
+  font-size: 17px;
   margin-bottom: 15px;
   transition: 0.3s ease-in-out;
   cursor: pointer;
@@ -76,7 +76,7 @@
 }
 .footerSentence {
   text-align: center;
-  font-size: 16px;
-  color: $text-second-color;
+  font-size: 17px;
+  color: $text-color;
   word-spacing: 2px;
 }

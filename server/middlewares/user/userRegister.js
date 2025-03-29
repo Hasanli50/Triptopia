@@ -41,12 +41,12 @@ const userRegisterValidator = [
       return true;
     }),
 
-  body("profile_image").custom((value, { req }) => {
-    if (!req.file) {
-      throw new Error("Image is required");
-    }
-    return true;
-  }),
+  // body("profile_image").custom((value, { req }) => {
+  //   if (!req.file) {
+  //     throw new Error("Image is required");
+  //   }
+  //   return true;
+  // }),
 
   (req, res, next) => {
     const errors = validationResult(req);

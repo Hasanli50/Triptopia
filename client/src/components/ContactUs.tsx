@@ -1,8 +1,9 @@
 import style from "../assets/style/contactUs.module.scss";
 import Grid from "@mui/material/Grid";
 import touristMale from "../assets/photo/male-tourist.png";
+import React from "react";
 
-const ContactUs = () => {
+const ContactUs: React.FC = () => {
   return (
     <>
       <section className={style.contactUs}>

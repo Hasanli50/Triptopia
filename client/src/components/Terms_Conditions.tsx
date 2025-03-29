@@ -1,6 +1,7 @@
+import React from "react";
 import style from "../assets/style/terms-conditions.module.scss";
 
-const Terms_Conditions = () => {
+const Terms_Conditions: React.FC = () => {
   return (
     <>
       <section className={style.termsConditions}>

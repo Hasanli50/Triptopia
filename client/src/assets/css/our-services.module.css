@@ -1,0 +1,74 @@
+.heading {
+  text-transform: uppercase;
+  color: #faa935;
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+
+.ourServices {
+  width: 80%;
+  margin: auto;
+  padding: 2% 0;
+  position: relative;
+}
+
+.sentence {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #0b2727;
+  line-height: 25px;
+  text-align: justify;
+}
+
+.item {
+  font-size: 16px;
+  margin-bottom: 15px;
+  color: #0b2727;
+  line-height: 25px;
+}
+
+.describe {
+  color: #000;
+  font-weight: 700;
+}
+
+.groupImageFirst {
+  position: absolute;
+  left: 0;
+  bottom: 130px;
+  opacity: 0.3;
+  transform: rotate(5deg);
+}
+@media only screen and (max-width: 590px) {
+  .groupImageFirst {
+    width: 120px;
+    bottom: 400px;
+  }
+}
+
+.groupImageSecond {
+  position: absolute;
+  right: 20px;
+  bottom: 130px;
+  opacity: 0.3;
+  transform: rotate(-15deg);
+}
+@media only screen and (max-width: 520px) {
+  .groupImageSecond {
+    width: 120px;
+    bottom: 100px;
+  }
+}
+
+.groupImageThird {
+  position: absolute;
+  right: 480px;
+  top: 60px;
+  opacity: 0.4;
+  transform: rotate(5deg);
+}
+@media only screen and (max-width: 520px) {
+  .groupImageThird {
+    display: flex;
+  }
+}/*# sourceMappingURL=our-services.module.css.map */

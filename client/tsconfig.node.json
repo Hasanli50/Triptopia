@@ -4,7 +4,7 @@
     "target": "ES2022",
     "lib": ["ES2023"],
     "module": "ESNext",
-    "skipLibCheck": true,
+    "skipLibCheck": false,               // check library types too
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -13,12 +13,22 @@
     "moduleDetection": "force",
     "noEmit": true,
 
-    /* Linting */
+    /* Linting & Strictness */
     "strict": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "alwaysStrict": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedIndexedAccess": true,
+    "noUncheckedSideEffectImports": true,
+    "exactOptionalPropertyTypes": true,
+    "useUnknownInCatchVariables": true
   },
   "include": ["vite.config.ts"]
 }

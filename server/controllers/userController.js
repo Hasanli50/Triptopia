@@ -280,11 +280,11 @@ const verifyHostAccount = async (req, res) => {
 
 const userLogin = async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const user = await User.login(username, password);
+    const { email, password } = req.body;
+    const user = await User.login(email, password);
 
     if (!user) {
-      res.status(404).json({
+      return res.status(404).json({
         message: "User not found",
         status: "fail",
         data: {},
@@ -292,7 +292,7 @@ const userLogin = async (req, res) => {
     }
 
     if (user.isVerified === false) {
-      res.status(404).json({
+      return res.status(404).json({
         message: "Your account not verified! Please verify your account",
         status: "fail",
         data: {},
@@ -331,7 +331,7 @@ const userLogin = async (req, res) => {
         { new: true }
       );
     }
-    res.status(200).json({
+    return res.status(200).json({
       data: {
         id: formatObj(user).id,
         username: user.username,
@@ -349,7 +349,7 @@ const userLogin = async (req, res) => {
       data: {},
     });
   }
-};
+};  
 
 const freezeAccount = async (req, res) => {
   try {
@@ -567,7 +567,7 @@ const forgotPassword = async (req, res) => {
         from: USER_MAIL,
         to: email,
         subject: "Triptopiaforgot password | Triptopia",
-        html: `<p>If you wwant change your password, click to <a href="http://localhost:8080/users/reset-password/${token}" >here</a></p>`,
+        html: `<p>If you wwant change your password, click to <a href="http://localhost:5173/reset-password/${token}" >here</a></p>`,
       })
       .catch((error) => {
         console.log("error: ", error);
@@ -576,7 +576,7 @@ const forgotPassword = async (req, res) => {
     res.status(200).json({
       message: "User successfully found",
       status: "success",
-      data: token,
+      token: token,
     });
   } catch (error) {
     res.status(500).json({

@@ -63,7 +63,7 @@ const Header: React.FC = () => {
 
           <nav className={style.nav}>
             <ul className={style.unorderList}>
-              <Link to={"/home"} className={style.link}>
+              <Link to={"/"} className={style.link}>
                 <li className={style.item}>home</li>
               </Link>
               <Link to={"/about-us"} className={style.link}>

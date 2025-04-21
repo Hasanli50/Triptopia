@@ -78,8 +78,8 @@ userSchema.pre("save", async function (next) {
   }
 });
 
-userSchema.statics.login = async function (username, password) {
-  const user = await this.findOne({ username });
+userSchema.statics.login = async function (email, password) {
+  const user = await this.findOne({ email });
   if (!user) {
     throw new Error("User not found");
   }

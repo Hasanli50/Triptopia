@@ -31,10 +31,10 @@ const updateUserInfoValidator = require("../middlewares/user/updateUserInfo.js")
 
 router.get("/", getAllNotDeletedUsers);
 router.get("/:id", getById);
-router.get("/:token", getByToken);
+router.get("/:token", verifyToken, getByToken);
 router.post(
   "/",
-  imageUpload.single("profile_image"),
+  // imageUpload.single("profile_image"),
   userRegisterValidator,
   userRegister
 );
@@ -47,11 +47,11 @@ router.post(
 router.patch("/verify-account-host/:id", verifyHostAccount);
 router.post("/verify-account", verifyAccountValidator, verifyAccount);
 router.post("/user-login", userLogin);
-router.patch("/freeze-account/:id", freezeAccount);
-router.patch("/unfreeze-account/:id", unFreezeAccount);
-router.patch("/banned-account/:id", banAccount);
-router.patch("/unbanned-account/:id", unBanAccount);
-router.delete("/delete-account/:id", deleteAccount);
+router.patch("/freeze-account/:id", verifyToken, freezeAccount);
+router.patch("/unfreeze-account/:id", verifyToken, unFreezeAccount);
+router.patch("/banned-account/:id", verifyToken, banAccount);
+router.patch("/unbanned-account/:id", verifyToken, unBanAccount);
+router.delete("/delete-account/:id", verifyToken, deleteAccount);
 router.post("/forgot-password", forgotPassValidator, forgotPassword);
 router.post(
   "/reset-password/:token",
@@ -66,7 +66,12 @@ router.patch(
   imageUpload.single("profile_image"),
   updateUserInfo
 );
-router.patch("/update-password/:id", updatePassValidator, updatePassword);
+router.patch(
+  "/update-password/:id",
+  verifyToken,
+  updatePassValidator,
+  updatePassword
+);
 router.post("/save-fcm-token", saveFcmToken);
 
 module.exports = router;

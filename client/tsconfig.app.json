@@ -5,7 +5,7 @@
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
-    "skipLibCheck": true,
+    "skipLibCheck": false, // Make sure library types are checked too (was true)
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -15,12 +15,22 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
-    /* Linting */
+    /* Linting & Strictness */
     "strict": true,
+    "strictNullChecks": true, // Already included in "strict", but explicit is good
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "alwaysStrict": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedIndexedAccess": true, // Makes object property access stricter
+    "noUncheckedSideEffectImports": true,
+    "exactOptionalPropertyTypes": true, // Optional props must be explicitly handled
+    "useUnknownInCatchVariables": true // Catch errors as unknown type
   },
   "include": ["src"]
 }

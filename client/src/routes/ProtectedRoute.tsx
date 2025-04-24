@@ -8,12 +8,12 @@ const ProtectedRoute = ({ children }: PropsWithChildren) => {
   const user = localStorage.getItem("user");
 
   useEffect(() => {
-    if (!auth || !user) {
+    if (!auth && !user) {
       navigate("/login");
     }
   }, [navigate, auth, user]);
 
-  if (!auth || !user) {
+  if (!auth && !user) {
     return null;
   }
 

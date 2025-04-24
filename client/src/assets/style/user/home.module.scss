@@ -1,0 +1,265 @@
+@use "../../scss/variables" as *;
+@use "../../scss/extends" as ext;
+
+.container {
+  width: 80%;
+  margin: auto;
+}
+.home {
+  .hero {
+    padding-top: 6%;
+    background-image: url("../../photo/Background.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    .firstColumn {
+      .travellingWithUs {
+        font-size: 18px;
+        color: $primery-color;
+        font-weight: 600;
+        margin-bottom: 13px;
+      }
+      .enjoyWithTourice {
+        font-size: 64px;
+        color: $dark-blue-color;
+        font-weight: 600;
+        margin-bottom: 13px;
+        @media only screen and (max-width: 425px) {
+          font-size: 35px;
+        }
+      }
+      .paragraph {
+        font-size: 16px;
+        color: $paragpah-color;
+        font-weight: normal;
+        margin-bottom: 15px;
+        max-width: 500px;
+      }
+    }
+    .imageBox {
+      width: 100%;
+      .secondSectionImage {
+        width: 100%;
+      }
+    }
+  }
+  .filters {
+    margin-bottom: 5%;
+    @media only screen and (max-width: 768px) {
+      margin-top: 5%;
+    }
+    .box {
+      padding: 20px 28px;
+      border-radius: 8px;
+      background-color: hsl(198, 97%, 13%, 0.7);
+    }
+    .btnBox {
+      margin-top: 25px;
+    }
+    .findTour {
+      width: 100%;
+      padding: 8px 10px;
+      border: none;
+      margin-top: 5px;
+      border-radius: 6px;
+      background-color: $button-color;
+      color: $text-second-color;
+      text-transform: capitalize;
+      cursor: pointer;
+      font-size: 14px;
+    }
+  }
+  .popularDestination {
+    background-color: $background-color;
+    padding: 120px 0;
+    .paragraph {
+      text-transform: uppercase;
+      color: $primery-color;
+      font-size: 14px;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    .box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 50px;
+      .sentence {
+        font-size: 45px;
+        color: $dark-blue-color;
+        font-weight: 600;
+        max-width: 636px;
+      }
+      .btn {
+        padding: 8.5px 20.5px;
+        color: #fff;
+        background-color: $dark-blue-color;
+        border: none;
+        font-size: 16px;
+        border-radius: 5px;
+        text-transform: capitalize;
+        cursor: pointer;
+      }
+      @media screen and (max-width: 768px) {
+        .sentence {
+          font-size: 30px;
+        }
+      }
+      @media screen and (max-width: 600px) {
+        flex-direction: column;
+        gap: 20px;
+        .btn {
+          // font-size: 12px;
+          width: 100%;
+        }
+      }
+    }
+    .places {
+      .imgBox {
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        overflow: hidden;
+        border-radius: 48%;
+        // border-radius: 20px;
+        // transition: 0.3s ease-in-out;
+        .img {
+          transition: 0.3s ease-in-out;
+          border-radius: 48%;
+          height: 247px;
+          width: 100%;
+          object-fit: cover;
+        }
+        &:hover {
+          // overflow: hidden;
+          // transform: scale(1.1);
+          .img {
+            overflow: hidden;
+            transform: scale(1.1);
+          }
+        }
+        @media only screen and (max-width: 375px) {
+          .img {
+            height: 180px;
+          }
+        }
+      }
+    }
+  }
+  .resetvation {
+    background-color: $dark-blue-color;
+    padding: 120px 0;
+
+    .paragraph {
+      text-transform: uppercase;
+      text-align: center;
+      color: $primery-color;
+      font-size: 12px;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .sentence {
+      margin: auto;
+      text-align: center;
+      font-size: 45px;
+      color: #fff;
+      font-weight: 600;
+      max-width: 636px;
+      text-transform: capitalize;
+      margin-bottom: 60px;
+    }
+
+    .card {
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .imageWrapper {
+      position: relative;
+      padding: 16px;
+
+      .cardImage {
+        height: 250px;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 8px;
+        @media only screen and (min-width: 768px) and (max-width: 1024px) {
+          height: 180px;
+        }
+        @media only screen and (max-width: 375px) {
+          height: 200px;
+        }
+      }
+    }
+
+    .popular {
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      top: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      z-index: 1;
+
+      .popularBtn {
+        background-color: #fa7335;
+        color: #fff;
+      }
+
+      .heartIcon {
+        background-color: #fff;
+        border-radius: 50%;
+        padding: 9px;
+        font-size: 16px;
+      }
+    }
+
+    .location {
+      color: #00000073;
+    }
+
+    .title {
+      color: $dark-blue-color;
+      font-weight: 600;
+      margin: 5px 0;
+    }
+
+    .rate {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .booking {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .price {
+        color: $dark-blue-color;
+        font-weight: 600;
+        font-size: 24px;
+
+        .person {
+          font-size: 14px;
+          font-weight: 500;
+        }
+      }
+
+      .bookBtn {
+        background-color: $button-color;
+        color: #fff;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .sentence {
+        font-size: 30px;
+      }
+    }
+  }
+}

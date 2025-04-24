@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import style from "../assets/style/forgot-password.module.scss";
 import { AxiosError } from "axios";
 import { ErrorMessageType } from "../types";
-import forgotPasschema from "../schema/forgotPass";
+import forgotPasschema from "../schema/forgotPassSchema";
 import { useForgotPasswordMutation } from "../api/slice/userApi";
 import toast from "react-hot-toast";
 import { saveToken } from "../utils/localeStorage";

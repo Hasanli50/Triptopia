@@ -11,15 +11,13 @@ import { useFormik } from "formik";
 import userLoginSchema from "../../schema/userLoginSchema";
 import { useUserLoginMutation } from "../../api/slice/userApi";
 import { saveToken } from "../../utils/localeStorage";
-import { AxiosError } from "axios";
 import { toast } from "react-hot-toast";
-import { ErrorMessageType } from "../../types";
 import { Eye, EyeOff } from "lucide-react";
 import Triptopia from "../../assets/photo/logo-dark.png";
 import Footer from "../../components/Footer";
 
 const Login: React.FC = () => {
-  const [userLogin, { isLoading, isError }] = useUserLoginMutation();
+  const [userLogin, { isLoading }] = useUserLoginMutation();
   const [show, setShow] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -67,28 +65,26 @@ const Login: React.FC = () => {
       try {
         const user = { email: values.email, password: values.password };
         const data = await userLogin(user).unwrap();
+        console.log("data message : ", data.message);
         const token = data.token;
         saveToken(token);
         localStorage.setItem("user", "true");
         console.log(data.token);
         actions.resetForm();
-        toast.success("You successfully sign in");
+        toast.success(data.message || "You successfully signed in");
         setTimeout(() => {
           navigate("/");
         }, 300);
       } catch (error: unknown) {
-        if (isError) {
-          const axiosError = error as AxiosError;
-          const errorData = axiosError.response?.data as ErrorMessageType;
-          console.log("Occurred error: ", errorData?.message);
-          console.log(error);
-          toast.error(
-            errorData?.message ||
-              "Email or password is wrong. Please try again."
-          );
-        }
-        actions.setSubmitting(false);
+        const err = error as { data?: { message?: string } };
+
+        console.log("Occurred error: ", err.data?.message);
+
+        toast.error(
+          err.data?.message || "Email or password is wrong. Please try again."
+        );
       }
+      actions.setSubmitting(false);
     },
     validationSchema: userLoginSchema,
   });

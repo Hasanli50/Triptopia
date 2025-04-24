@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-const forgotPasschema = yup.object({
+const forgotPassSchema = yup.object({
   email: yup
     .string()
     .email("Invalid email adress")
@@ -12,4 +12,4 @@ const forgotPasschema = yup.object({
     .trim(),
 });
 
-export default forgotPasschema;
+export default forgotPassSchema;

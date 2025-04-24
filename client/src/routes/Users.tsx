@@ -11,6 +11,7 @@ import ForgotPass from "../pages/ForgotPass";
 import Register from "../pages/user/Register";
 import ResetPass from "../pages/ResetPass";
 import ProtectedRoute from "./ProtectedRoute";
+import VerifyAccount from "../pages/user/VerifyAccount";
 
 const Users: React.FC = () => {
   return (
@@ -30,6 +31,7 @@ const Users: React.FC = () => {
       </Route>
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
+      <Route path="verify-account/:token" element={<VerifyAccount />} />
       <Route path="forgot-password" element={<ForgotPass />} />
       <Route path="reset-password/:token" element={<ResetPass />} />
       <Route path="*" element={<NotFound />} />

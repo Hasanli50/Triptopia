@@ -56,6 +56,7 @@ const userSchema = new Schema(
       default: null,
     },
     verificationCode: { type: String, default: null },
+    verificationCodeExpires: { type: Date, default: null },
     isVerified: {
       type: Boolean,
       default: false,

@@ -16,7 +16,7 @@ const Header: React.FC = () => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMenuItemClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleMenuItemClick = (_event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(null);
   };
 
@@ -33,7 +33,7 @@ const Header: React.FC = () => {
     setMenuAnchor(event.currentTarget);
   };
 
-  const selectMenuItem = (event: React.MouseEvent<HTMLElement>) => {
+  const selectMenuItem = (_event: React.MouseEvent<HTMLElement>) => {
     setMenuAnchor(null);
   };
 

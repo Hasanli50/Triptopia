@@ -1,0 +1,64 @@
+@use "../scss/variables" as *;
+@use "../scss/extends" as ext;
+
+.notFound {
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.imgBox {
+  min-width: 0px;
+  margin-bottom: 20px;
+  max-width: 500px;
+}
+.img {
+  object-fit: cover;
+  width: 100%;
+}
+.backHome {
+  position: absolute;
+  bottom: 60px;
+  left: 40%;
+  padding: 5px 20px;
+  border-radius: 5px;
+  border: 1px solid $secondary-color;
+  background-color: #fff;
+  font-weight: bold;
+  text-transform: capitalize;
+  color: $secondary-color;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  @media only screen and (max-width: 2560px) {
+    left: 48%;
+  }
+  @media only screen and (max-width: 1440px) {
+    left: 46%;
+  }
+  @media only screen and (max-width: 1024px) {
+    left: 44.5%;
+  }
+  @media only screen and (max-width: 768px) {
+    left: 42.8%;
+  }
+  @media only screen and (max-width: 425px) {
+    left: 37.8%;
+  }
+  @media only screen and (max-width: 375px) {
+    left: 36.8%;
+    padding: 5px 15px;
+  }
+  @media only screen and (max-width: 320px) {
+    bottom: 40px;
+    padding: 5px 15px;
+    font-size: 11px;
+  }
+}
+.backHome:hover {
+  background-color: $secondary-color;
+  border: 1px solid $secondary-color;
+  color: #fff;
+  text-decoration: none;
+}

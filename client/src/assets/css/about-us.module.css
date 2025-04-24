@@ -1,0 +1,52 @@
+.heading {
+  text-transform: uppercase;
+  color: #faa935;
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+
+.aboutUs {
+  width: 80%;
+  margin: auto;
+  padding: 2% 0;
+  position: relative;
+}
+
+.imgBox {
+  width: 100%;
+}
+
+.image {
+  width: 100%;
+}
+
+.sentence {
+  font-size: 16px;
+  line-height: 30px;
+  margin-bottom: 20px;
+  text-align: justify;
+}
+
+.groupImageFirst {
+  position: absolute;
+  left: 0;
+  bottom: 130px;
+  opacity: 0.3;
+  transform: rotate(5deg);
+}
+
+.groupImageSecond {
+  position: absolute;
+  right: 0;
+  bottom: 320px;
+  opacity: 0.3;
+  transform: rotate(-15deg);
+}
+
+.groupImageThird {
+  position: absolute;
+  right: 0;
+  top: 220px;
+  opacity: 0.4;
+  transform: rotate(25deg);
+}/*# sourceMappingURL=about-us.module.css.map */

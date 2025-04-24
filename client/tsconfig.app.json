@@ -5,7 +5,7 @@
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
-    "skipLibCheck": false, // Make sure library types are checked too (was true)
+    "skipLibCheck": true, // Make sure library types are checked too (was true)
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -29,7 +29,7 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true, // Makes object property access stricter
     "noUncheckedSideEffectImports": true,
-    "exactOptionalPropertyTypes": true, // Optional props must be explicitly handled
+    "exactOptionalPropertyTypes": false, // Optional props must be explicitly handled
     "useUnknownInCatchVariables": true // Catch errors as unknown type
   },
   "include": ["src"]

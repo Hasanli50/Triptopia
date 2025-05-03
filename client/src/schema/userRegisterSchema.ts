@@ -10,7 +10,7 @@ const userRegisterSchema = yup.object().shape({
   phone_number: yup
     .string()
     .matches(
-      /^(\+994)(50|51|55|70|77|99)[0-9]{7}$/,
+      /^(\+994)(50|51|55|70|77|99|10)[0-9]{7}$/,
       "Invalid Azerbaijani phone number"
     )
     .required("Phone number is required")

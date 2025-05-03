@@ -98,8 +98,37 @@ const getByToken = async (req, res) => {
   }
 };
 
-let verificationCode = null;
-let phoneNumberToVerify = null;
+const getUserByTokenFromParams = async (req, res) => {
+  try {
+    const token = req.params.token;
+    const decoded = User.decodeToken(token);
+
+    if (!decoded || !decoded.id) {
+      return res.status(401).json({ message: "Invalid token" });
+    }
+
+    const user = await User.findById(decoded.id);
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+        status: "fail",
+        data: {},
+      });
+    }
+    res.status(200).json({
+      message: "User successfully found!",
+      status: "success",
+      data: formatObj(user),
+    });
+  } catch (error) {
+    console.error("Server error:", error);
+    res.status(500).json({
+      message: error.message || "Internal server error",
+      status: "fail",
+      data: {},
+    });
+  }
+};
 
 function generateVerificationCode() {
   return Math.floor(100000 + Math.random() * 900000);
@@ -109,8 +138,9 @@ function generateVerificationCode() {
 const userRegister = async (req, res) => {
   try {
     const { username, password, email, phone_number } = req.body;
-    phoneNumberToVerify = phone_number;
-    verificationCode = generateVerificationCode();
+    const phoneNumberToVerify = phone_number;
+    const verificationCode = generateVerificationCode();
+    const verificationCodeExpires = new Date(Date.now() + 1 * 60 * 1000);
 
     const duplicate = await User.findOne({ $or: [{ email }, { username }] });
     if (duplicate) {
@@ -134,6 +164,7 @@ const userRegister = async (req, res) => {
     });
 
     newUser.verificationCode = verificationCode;
+    newUser.verificationCodeExpires = verificationCodeExpires;
 
     await client.messages.create({
       body: `Your verification code is: ${verificationCode}`,
@@ -148,6 +179,7 @@ const userRegister = async (req, res) => {
         "User successfully created and verification code sent to your phone!",
       status: "success",
       data: formatObj(newUser),
+      token: newUser.generateToken(),
     });
   } catch (error) {
     console.error(error);
@@ -206,6 +238,14 @@ const hostRegister = async (req, res) => {
 const verifyAccount = async (req, res) => {
   try {
     const { verificationCode: userInputCode } = req.body;
+    const { token } = req.params;
+
+    if (!token) {
+      return res.status(400).json({
+        message: "Token is required",
+        status: "fail",
+      });
+    }
 
     const user = await User.findOne({ verificationCode: userInputCode });
 
@@ -217,9 +257,18 @@ const verifyAccount = async (req, res) => {
       });
     }
 
+    if (Date.now() > user.verificationCodeExpires) {
+      return res.status(404).json({
+        message: "Verification code exppired!",
+        status: "fail",
+        data: {},
+      });
+    }
+
     if (user.verificationCode === userInputCode) {
       user.isVerified = true;
       user.verificationCode = null;
+      user.verificationCodeExpires = null;
       await user.save();
 
       res.status(200).json({
@@ -276,6 +325,61 @@ const verifyHostAccount = async (req, res) => {
       data: {},
     });
   }
+};
+
+const resendOtp = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(id);
+
+  if (!user) {
+    return res.status(404).json({
+      message: "User not found",
+      status: "fail",
+      data: {},
+    });
+  }
+
+  if (user.isVerified) {
+    return res.status(400).json({
+      message: "User already verified",
+      status: "fail",
+      data: {},
+    });
+  }
+
+  if (Date.now() < user.verificationCodeExpires) {
+    return res.status(400).json({
+      message: "Code not expired",
+      status: "fail",
+      data: {},
+    });
+  }
+
+  const code = generateVerificationCode();
+  const expiresCode = new Date(Date.now() + 1 * 60 * 1000);
+
+  await client.messages.create({
+    body: `Your verification code is: ${code}`,
+    from: twilioPhoneNumber,
+    to: user.phone_number,
+  });
+
+  const updateData = await User.findByIdAndUpdate(
+    id,
+    {
+      verificationCode: code,
+      verificationCodeExpires: expiresCode,
+    },
+    { new: true, runValidators: true }
+  );
+
+  updateData.save();
+
+  res.status(200).json({
+    message: "Otp code successfully resend",
+    status: "success",
+    data: updateData,
+  });
 };
 
 const userLogin = async (req, res) => {
@@ -349,7 +453,7 @@ const userLogin = async (req, res) => {
       data: {},
     });
   }
-};  
+};
 
 const freezeAccount = async (req, res) => {
   try {
@@ -778,8 +882,10 @@ module.exports = {
   getAllNotDeletedUsers,
   getById,
   getByToken,
+  getUserByTokenFromParams,
   userRegister,
   verifyAccount,
+  resendOtp,
   userLogin,
   freezeAccount,
   unFreezeAccount,

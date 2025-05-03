@@ -25,7 +25,6 @@ interface MyFormValues {
   phone_number: string;
 }
 
-
 const Register: React.FC = () => {
   const [userRegister, { isLoading, isError }] = useUserRegisterMutation();
   const [show, setShow] = useState<boolean>(false);
@@ -79,7 +78,10 @@ const Register: React.FC = () => {
         }).unwrap();
         console.log(request);
         actions.resetForm();
-        toast.success("Successfully sign up!");
+        toast.success("Successfully sign up! Please verify your account.");
+        setTimeout(() => {
+          navigate(`/verify-account/${request.token}`);
+        }, 300);
       } catch (error: unknown) {
         if (isError) {
           toast.error("Something went wrong. Please try again.");
@@ -180,7 +182,7 @@ const Register: React.FC = () => {
                     <input
                       className={`${style.input} ${style.phoneNumber}`}
                       type="tel"
-                      pattern="^(\+994)(50|51|55|70|77|99)[0-9]{7}$"
+                      pattern="^(\+994)(50|51|55|70|77|99|10)[0-9]{7}$"
                       placeholder="+994 XX XXX XX XX"
                       name="phone_number"
                       value={

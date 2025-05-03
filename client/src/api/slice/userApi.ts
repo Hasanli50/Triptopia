@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BASE_URL, Endpoints } from "../endpoints/endpoint";
-import { User } from "../../types/user";
+import { ApiResponse, User } from "../../types/user";
 import { getToken } from "../../utils/localeStorage";
 
 interface UserResponse {
@@ -16,6 +16,13 @@ interface UserResponse {
 }
 
 type TokenType = {
+  token: string;
+};
+
+type UserRegisterResponse = {
+  message: string;
+  status: string;
+  data: User;
   token: string;
 };
 
@@ -36,7 +43,7 @@ export const userApi = createApi({
     }),
 
     getByToken: build.query<User, { token: string }>({
-      query: (token) => ({
+      query: ({ token }) => ({
         url: `/users/${token}`,
         method: "GET",
         headers: {
@@ -46,7 +53,18 @@ export const userApi = createApi({
       providesTags: ["Users"],
     }),
 
-    userRegister: build.mutation<User, Partial<User>>({
+    getUserByTokenFromParams: build.query<ApiResponse<User>, { token: string }>({
+      query: ({ token }) => ({
+        url: `/users/get-by-token/${token}`,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      providesTags: ["Users"],
+    }),
+
+    userRegister: build.mutation<UserRegisterResponse, Partial<User>>({
       query: (newUser) => ({
         url: `/users`,
         method: "POST",
@@ -64,11 +82,25 @@ export const userApi = createApi({
       invalidatesTags: [{ type: "Users" }],
     }),
 
-    verifyAccount: build.mutation<User, Partial<User>>({
-      query: (code) => ({
-        url: `/users/${Endpoints.VERIFY_ACCOUNT}`,
+    verifyAccount: build.mutation<
+      User,
+      { verificationCode: string; token: string }
+    >({
+      query: ({ verificationCode, token }) => ({
+        url: `/users/${Endpoints.VERIFY_ACCOUNT}/${token}`,
         method: "POST",
-        body: code,
+        body: { verificationCode },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags: [{ type: "Users" }],
+    }),
+
+    resendOtp: build.mutation<User, { id: string }>({
+      query: ({ id }) => ({
+        url: `/users/resend-otp/${id}`,
+        method: "PATCH",
       }),
       invalidatesTags: [{ type: "Users" }],
     }),
@@ -225,9 +257,11 @@ export const {
   useGetAllNotDeletedUsersQuery,
   useGetByIdQuery,
   useGetByTokenQuery,
+  useGetUserByTokenFromParamsQuery,
   useUserRegisterMutation,
   useHostRegisterMutation,
   useVerifyAccountMutation,
+  useResendOtpMutation,
   useVerifyHostAccountMutation,
   useUserLoginMutation,
   useFreezeAccountMutation,

@@ -1,0 +1,202 @@
+.input {
+  padding: 20px 30px;
+  border: 1px solid #faa935;
+  background-color: #fff;
+  border-radius: 8px;
+  width: 100%;
+  position: relative;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.input::placeholder {
+  font-size: 16px;
+  color: #d9d9d9;
+}
+
+.container {
+  width: 80%;
+  margin: auto;
+}
+
+.resetPass {
+  width: 100vw;
+  height: 100vh;
+  transform: rotate(0deg);
+  background-image: url("https://img.freepik.com/free-photo/top-view-travel-elements-arrangement_23-2148971123.jpg?t=st=1745082823~exp=1745086423~hmac=09be4864958b4a491d2a321b3624581b083b51947bf5eb129b139f65249a645e&w=996");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+}
+
+.box {
+  padding: 15% 0 0 0;
+}
+
+.heading {
+  font-size: 35px;
+  text-transform: capitalize;
+  margin-bottom: 10px;
+  color: #faa935;
+}
+
+.sentence {
+  font-size: 15px;
+  margin-bottom: 10px;
+  color: #6e7074;
+}
+
+.form {
+  max-width: 400px;
+}
+
+.inputBox {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.input {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.firstPassState {
+  position: absolute;
+  top: 260px;
+  left: 505px;
+  cursor: pointer;
+  color: #7bcbdb;
+  width: 18px;
+}
+@media only screen and (min-device-width: 1600px) and (max-device-width: 2560px) {
+  .firstPassState {
+    top: 400px;
+    left: 620px;
+  }
+}
+@media only screen and (min-device-width: 900px) and (max-device-width: 1024px) {
+  .firstPassState {
+    top: 215px;
+    left: 470px;
+  }
+}
+@media only screen and (min-device-width: 500px) and (max-device-width: 900px) {
+  .firstPassState {
+    top: 215px;
+    left: 445px;
+  }
+}
+@media only screen and (min-device-width: 400px) and (max-device-width: 500px) {
+  .firstPassState {
+    top: 162px;
+    left: 345px;
+  }
+}
+@media only screen and (min-device-width: 375px) and (max-device-width: 400px) {
+  .firstPassState {
+    top: 169px;
+    left: 305px;
+  }
+}
+@media only screen and (min-device-width: 320px) and (max-device-width: 340px) {
+  .firstPassState {
+    top: 159px;
+    left: 255px;
+  }
+}
+
+.secondPassState {
+  position: absolute;
+  top: 340px;
+  left: 505px;
+  cursor: pointer;
+  color: #7bcbdb;
+  width: 18px;
+}
+@media only screen and (min-device-width: 1600px) and (max-device-width: 2560px) {
+  .secondPassState {
+    top: 480px;
+    left: 620px;
+  }
+}
+@media only screen and (min-device-width: 900px) and (max-device-width: 1024px) {
+  .secondPassState {
+    top: 296px;
+    left: 470px;
+  }
+}
+@media only screen and (min-device-width: 500px) and (max-device-width: 900px) {
+  .secondPassState {
+    top: 296px;
+    left: 445px;
+  }
+}
+@media only screen and (min-device-width: 400px) and (max-device-width: 500px) {
+  .secondPassState {
+    top: 244px;
+    left: 345px;
+  }
+}
+@media only screen and (min-device-width: 375px) and (max-device-width: 400px) {
+  .secondPassState {
+    top: 253px;
+    left: 305px;
+  }
+}
+@media only screen and (min-device-width: 320px) and (max-device-width: 340px) {
+  .secondPassState {
+    top: 243px;
+    left: 255px;
+  }
+}
+
+.resetBtn {
+  width: 100%;
+  margin-bottom: 25px;
+  padding: 10px 10px;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #faa935;
+  transition: 0.3s ease-in-out;
+  font-size: 18px;
+  cursor: pointer;
+  border: none;
+  text-transform: capitalize;
+}
+
+.resetBtn:hover {
+  background-color: #ff7e01;
+}
+
+.loader {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #fff;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@media only screen and (max-width: 768px) {
+  .box {
+    padding: 20% 0 0 0;
+    text-align: justify;
+  }
+  .resetPass {
+    background-image: url("../photo/reset-pass-small-device.jpg");
+    margin: auto;
+  }
+}/*# sourceMappingURL=reset-pass.module.css.map */

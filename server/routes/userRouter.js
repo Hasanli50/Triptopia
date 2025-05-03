@@ -6,6 +6,7 @@ const {
   getByToken,
   userRegister,
   verifyAccount,
+  resendOtp,
   userLogin,
   freezeAccount,
   unFreezeAccount,
@@ -19,6 +20,7 @@ const {
   hostRegister,
   verifyHostAccount,
   saveFcmToken,
+  getUserByTokenFromParams,
 } = require("../controllers/userController.js");
 const imageUpload = require("../config/profileImageMulter.js");
 const { verifyToken } = require("../config/verifyToken.js");
@@ -32,6 +34,7 @@ const updateUserInfoValidator = require("../middlewares/user/updateUserInfo.js")
 router.get("/", getAllNotDeletedUsers);
 router.get("/:id", getById);
 router.get("/:token", verifyToken, getByToken);
+router.get("/get-by-token/:token", verifyToken, getUserByTokenFromParams);
 router.post(
   "/",
   // imageUpload.single("profile_image"),
@@ -45,7 +48,13 @@ router.post(
   hostRegister
 );
 router.patch("/verify-account-host/:id", verifyHostAccount);
-router.post("/verify-account", verifyAccountValidator, verifyAccount);
+router.post(
+  "/verify-account/:token",
+  verifyToken,
+  verifyAccountValidator,
+  verifyAccount
+);
+router.patch("/resend-otp/:id", resendOtp);
 router.post("/user-login", userLogin);
 router.patch("/freeze-account/:id", verifyToken, freezeAccount);
 router.patch("/unfreeze-account/:id", verifyToken, unFreezeAccount);

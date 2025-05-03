@@ -26,10 +26,7 @@
 //   }
 // };
 
-
-
-
-// firebase 
+// firebase
 // npm install firebase
 
 // Import the functions you need from the SDKs you need

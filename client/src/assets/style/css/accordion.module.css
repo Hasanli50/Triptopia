@@ -1,0 +1,20 @@
+.ant-collapse {
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+}
+
+.ant-collapse-item {
+  border: 1px solid #007bff;
+  background-color: #ffffff;
+}
+
+.ant-collapse-header {
+  background-color: #007bff;
+  border-bottom: 1px solid #ccc;
+  color: white;
+}
+
+.ant-collapse-item-active .ant-collapse-header {
+  background-color: #0056b3;
+  color: white;
+}/*# sourceMappingURL=accordion.module.css.map */

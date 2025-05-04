@@ -1,0 +1,29 @@
+@use "../../scss/variables" as *;
+
+  .ant-collapse {
+  background-color: #f0f0f0; 
+  border: 1px solid #ddd; 
+}
+
+.ant-collapse-item {
+  background-color: #ffffff; 
+}
+
+.ant-collapse-header {
+  background-color: #fff; 
+  border-bottom: 1px solid #ccc; 
+  color: white; 
+}
+
+.ant-collapse-item-active .ant-collapse-header {
+  background-color: #fff;
+  color: white;
+}
+.ant-collapse-header-text{
+  font-weight: 600;
+  color: $dark-blue-color;
+}
+
+.ant-collapse-item-active .ant-collapse-header-text {
+  color: $primery-color;
+}

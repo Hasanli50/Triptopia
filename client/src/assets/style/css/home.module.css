@@ -241,4 +241,79 @@
   .home .resetvation .sentence {
     font-size: 30px;
   }
+}
+.home .opinionOurClient {
+  padding: 120px 0;
+}
+.home .opinionOurClient .paragraph {
+  text-transform: uppercase;
+  text-align: center;
+  color: #ff7e01;
+  font-size: 12px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+.home .opinionOurClient .heading {
+  margin: auto;
+  text-align: center;
+  font-size: 45px;
+  color: #012e41;
+  font-weight: 600;
+  max-width: 660px;
+  text-transform: capitalize;
+  margin-bottom: 60px;
+}
+.home .opinionOurClient .cardTop {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.home .opinionOurClient .cardTop .avatar {
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+}
+.home .opinionOurClient .cardTop .userName {
+  color: #012e41;
+  font-weight: 600;
+  margin: 5px 0;
+  font-size: 18px;
+}
+.home .opinionOurClient .cardTop .specialist {
+  color: #345867;
+  font-weight: 500;
+}
+.home .opinionOurClient .sentence {
+  color: #345867;
+  font-size: 14px;
+  text-align: justify;
+  margin-top: 10px;
+}
+@media screen and (max-width: 768px) {
+  .home .opinionOurClient .heading {
+    font-size: 30px;
+  }
+}
+.home .featuredDestination {
+  background-color: #f6f6f6;
+  padding: 120px 0;
+}
+.home .featuredDestination .paragraph {
+  text-transform: uppercase;
+  text-align: center;
+  color: #ff7e01;
+  font-size: 12px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+.home .featuredDestination .heading {
+  margin: auto;
+  text-align: center;
+  font-size: 45px;
+  color: #012e41;
+  font-weight: 600;
+  max-width: 660px;
+  text-transform: capitalize;
+  margin-bottom: 60px;
 }/*# sourceMappingURL=home.module.css.map */

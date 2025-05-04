@@ -1,4 +1,4 @@
-import { Col, Form, Row } from "antd";
+import { Avatar, Col, Form, Row } from "antd";
 import firstSectionImage from "../../assets/photo/first section - home page.png";
 import style from "../../assets/style/user/home.module.scss";
 import { Select } from "antd";
@@ -9,6 +9,7 @@ import turkey from "../../assets/photo/turkey.jpg";
 import { EnvironmentFilled, HeartOutlined } from "@ant-design/icons";
 import { Card, Typography, Button } from "antd";
 import { Rate } from "antd";
+import Accordion from "../../components/user/Accordion";
 
 const Home: React.FC = () => {
   return (
@@ -212,6 +213,114 @@ const Home: React.FC = () => {
               </Card>
             </Col>
           </Row>
+        </div>
+      </section>
+
+      {/* fifth section */}
+      <section className={style.opinionOurClient}>
+        <div className={style.container}>
+          <p className={style.paragraph}>testimonial</p>
+          <p className={style.heading}>what our client said about us</p>
+
+          <Row gutter={[16, 16]}>
+            <Col xs={24} sm={24} md={12} lg={8} xl={8}>
+              <Card>
+                <div className={style.cardTop}>
+                  <Avatar
+                    className={style.avatar}
+                    src="https://images-bonnier.imgix.net/files/wom/production/2023/10/17190747/avatar-2-lead-f7N0YLhfwqdMd1Np56txVg.jpg?auto=format,compress&crop=focalpoint&fp-x=0.5&fp-y=0.5&ar=1.4414414414414414:1&w=922&q=80&fit=crop"
+                  />
+
+                  <div>
+                    <Typography.Title level={5} className={style.userName}>
+                      Vallentina Putri
+                    </Typography.Title>
+                    <Typography className={style.specialist}>
+                      Customer
+                    </Typography>
+                  </div>
+                </div>
+                <Rate
+                  allowHalf
+                  defaultValue={2.5}
+                  style={{ fontSize: "14px" }}
+                />
+                <Typography className={style.sentence}>
+                  As a seasoned traveler, I can confidently say that Tourice is
+                  one of the best travel agencies I've had the pleasure of
+                  working.
+                </Typography>
+              </Card>
+            </Col>
+            <Col xs={24} sm={24} md={12} lg={8} xl={8}>
+              <Card>
+                <div className={style.cardTop}>
+                  <Avatar
+                    className={style.avatar}
+                    src="https://images-bonnier.imgix.net/files/wom/production/2023/10/17190747/avatar-2-lead-f7N0YLhfwqdMd1Np56txVg.jpg?auto=format,compress&crop=focalpoint&fp-x=0.5&fp-y=0.5&ar=1.4414414414414414:1&w=922&q=80&fit=crop"
+                  />
+
+                  <div>
+                    <Typography.Title level={5} className={style.userName}>
+                      Vallentina Putri
+                    </Typography.Title>
+                    <Typography className={style.specialist}>
+                      Customer
+                    </Typography>
+                  </div>
+                </div>
+                <Rate
+                  allowHalf
+                  defaultValue={2.5}
+                  style={{ fontSize: "14px" }}
+                />
+                <Typography className={style.sentence}>
+                  As a seasoned traveler, I can confidently say that Tourice is
+                  one of the best travel agencies I've had the pleasure of
+                  working.
+                </Typography>
+              </Card>
+            </Col>
+            <Col xs={24} sm={24} md={12} lg={8} xl={8}>
+              <Card>
+                <div className={style.cardTop}>
+                  <Avatar
+                    className={style.avatar}
+                    src="https://images-bonnier.imgix.net/files/wom/production/2023/10/17190747/avatar-2-lead-f7N0YLhfwqdMd1Np56txVg.jpg?auto=format,compress&crop=focalpoint&fp-x=0.5&fp-y=0.5&ar=1.4414414414414414:1&w=922&q=80&fit=crop"
+                  />
+
+                  <div>
+                    <Typography.Title level={5} className={style.userName}>
+                      Vallentina Putri
+                    </Typography.Title>
+                    <Typography className={style.specialist}>
+                      Customer
+                    </Typography>
+                  </div>
+                </div>
+                <Rate
+                  allowHalf
+                  defaultValue={2.5}
+                  style={{ fontSize: "14px" }}
+                />
+                <Typography className={style.sentence}>
+                  As a seasoned traveler, I can confidently say that Tourice is
+                  one of the best travel agencies I've had the pleasure of
+                  working.
+                </Typography>
+              </Card>
+            </Col>
+          </Row>
+        </div>
+      </section>
+
+      {/* sixth section */}
+      <section className={style.featuredDestination}>
+        <div className={style.container}>
+          <p className={style.paragraph}>faq</p>
+          <p className={style.heading}>Unpacking Your Travel Questions</p>
+
+          <Accordion />
         </div>
       </section>
     </main>

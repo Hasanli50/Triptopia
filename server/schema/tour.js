@@ -10,7 +10,12 @@ const tourSchema = new Schema(
     price: { type: Number, min: 0, required: true },
     location: { type: String, required: true },
     duration: { type: Number, min: 0 },
-    available_dates: [{ type: Date }],
+    available_dates: [
+      {
+        start_date: { type: Date, required: true },
+        end_date: { type: Date, required: true },
+      },
+    ],
     itinerary: [{ type: String }],
     images: { type: [String], required: true, minItems: 0, maxItems: 10 },
     tour_guide: {
@@ -21,9 +26,19 @@ const tourSchema = new Schema(
     },
     userIds: { type: [Schema.Types.ObjectId], ref: "User" },
     reviewIds: { type: [Schema.Types.ObjectId], ref: "Review" },
-    number_of_people: { type: Number, default: 0 },
     max_group_size: { type: Number, required: true },
-    min_group_size: { type: Number, min: 0, default: 1 },
+    number_of_people: {
+      type: Number,
+      default: 0,
+      validate: {
+        validator: function (value) {
+          return value <= this.max_group_size;
+        },
+        message: function (props) {
+          return `Number of people (${props.value}) exceeds max group size (${this.max_group_size})`;
+        },
+      },
+    },
   },
   { timestamps: true }
 );

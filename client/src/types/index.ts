@@ -1,3 +1,4 @@
 export type ErrorMessageType = {
-    message: string;
-  };
+  message: string;
+};
+

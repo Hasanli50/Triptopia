@@ -8,6 +8,8 @@ const {
   verifyAccount,
   resendOtp,
   userLogin,
+  addToWishlist,
+  removeFromWishlist,
   freezeAccount,
   unFreezeAccount,
   banAccount,
@@ -32,8 +34,8 @@ const resetPassValidator = require("../middlewares/user/resetPass.js");
 const updateUserInfoValidator = require("../middlewares/user/updateUserInfo.js");
 
 router.get("/", getAllNotDeletedUsers);
+router.get("/get-by-token", verifyToken, getByToken);
 router.get("/:id", getById);
-router.get("/:token", verifyToken, getByToken);
 router.get("/get-by-token/:token", verifyToken, getUserByTokenFromParams);
 router.post(
   "/",
@@ -56,6 +58,8 @@ router.post(
 );
 router.patch("/resend-otp/:id", resendOtp);
 router.post("/user-login", userLogin);
+router.delete("/wishlist/:id", verifyToken, removeFromWishlist);
+router.patch("/wishlist/:id", verifyToken, addToWishlist);
 router.patch("/freeze-account/:id", verifyToken, freezeAccount);
 router.patch("/unfreeze-account/:id", verifyToken, unFreezeAccount);
 router.patch("/banned-account/:id", verifyToken, banAccount);

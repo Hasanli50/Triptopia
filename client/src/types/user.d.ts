@@ -1,9 +1,3 @@
-
-type ApiResponse<T> = {
-  status: string;
-  message: string;
-  data: T;
-};
 export interface IUser {
   id: string;
   username: string;
@@ -22,3 +16,5 @@ export interface IUser {
   travel_history: string[];
   // photo
 }
+
+

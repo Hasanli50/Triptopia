@@ -1,8 +1,8 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BASE_URL, Endpoints } from "../endpoints/endpoint";
-import { ApiResponse, User } from "../../types/user";
-import { getToken } from "../../utils/localeStorage";
-
+import { ApiResponse } from "./../../types/Index.d";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { Endpoints } from "../endpoints/endpoint";
+import { IUser } from "../../types/user";
+import { baseQuery } from "./baseApi";
 interface UserResponse {
   token: string;
   message: string;
@@ -22,49 +22,43 @@ type TokenType = {
 type UserRegisterResponse = {
   message: string;
   status: string;
-  data: User;
+  data: IUser;
   token: string;
 };
 
 export const userApi = createApi({
   reducerPath: "userApi",
-  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  baseQuery: baseQuery,
   tagTypes: ["Users"], // Helps auto-refetch after mutations
 
   endpoints: (build) => ({
-    getAllNotDeletedUsers: build.query<User[], void>({
+    getAllNotDeletedUsers: build.query<IUser[], void>({
       query: () => "/users",
       providesTags: ["Users"],
     }),
 
-    getById: build.query<User, { id: string }>({
+    getById: build.query<IUser, { id: string }>({
       query: (id) => `/users/${id}`,
       providesTags: ["Users"],
     }),
 
-    getByToken: build.query<User, { token: string }>({
-      query: ({ token }) => ({
-        url: `/users/${token}`,
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${getToken}`,
-        },
-      }),
+    getByToken: build.query<ApiResponse<IUser>, void>({
+      query: () => "/users/get-by-token",
       providesTags: ["Users"],
     }),
 
-    getUserByTokenFromParams: build.query<ApiResponse<User>, { token: string }>({
+    getUserByTokenFromParams: build.query<
+      ApiResponse<IUser>,
+      { token: string }
+    >({
       query: ({ token }) => ({
         url: `/users/get-by-token/${token}`,
         method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       }),
       providesTags: ["Users"],
     }),
 
-    userRegister: build.mutation<UserRegisterResponse, Partial<User>>({
+    userRegister: build.mutation<UserRegisterResponse, Partial<IUser>>({
       query: (newUser) => ({
         url: `/users`,
         method: "POST",
@@ -73,7 +67,7 @@ export const userApi = createApi({
       invalidatesTags: [{ type: "Users" }],
     }),
 
-    hostRegister: build.mutation<User, Partial<User>>({
+    hostRegister: build.mutation<IUser, Partial<IUser>>({
       query: (newHost) => ({
         url: `/users/${Endpoints.HOST}`,
         method: "POST",
@@ -83,21 +77,18 @@ export const userApi = createApi({
     }),
 
     verifyAccount: build.mutation<
-      User,
+      IUser,
       { verificationCode: string; token: string }
     >({
       query: ({ verificationCode, token }) => ({
         url: `/users/${Endpoints.VERIFY_ACCOUNT}/${token}`,
         method: "POST",
         body: { verificationCode },
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       }),
       invalidatesTags: [{ type: "Users" }],
     }),
 
-    resendOtp: build.mutation<User, { id: string }>({
+    resendOtp: build.mutation<IUser, { id: string }>({
       query: ({ id }) => ({
         url: `/users/resend-otp/${id}`,
         method: "PATCH",
@@ -106,8 +97,8 @@ export const userApi = createApi({
     }),
 
     verifyHostAccount: build.mutation<
-      User,
-      { code: Partial<User>; id: string }
+      IUser,
+      { code: Partial<IUser>; id: string }
     >({
       query: ({ code, id }) => ({
         url: `/users/${Endpoints.VERIFY_ACCOUNT_HOST}/${id}`,
@@ -129,61 +120,62 @@ export const userApi = createApi({
       invalidatesTags: [{ type: "Users" }],
     }),
 
-    freezeAccount: build.mutation<User, Partial<User>>({
+    addToWishlist: build.mutation<IUser, { id: string }>({
+      query: ({ id }) => ({
+        url: `/users/${Endpoints.ADD_TO_WISHLIST}/${id}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: [{ type: "Users" }],
+    }),
+
+    removeFromWishlist: build.mutation<IUser, { id: string }>({
+      query: ({ id }) => ({
+        url: `/users/${Endpoints.ADD_TO_WISHLIST}/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "Users" }],
+    }),
+
+    freezeAccount: build.mutation<IUser, Partial<IUser>>({
       query: (id) => ({
         url: `/users/${Endpoints.FREEZE_ACCOUNT}/${id}`,
         method: "PATCH",
         body: { isFrozen: true },
-        headers: {
-          Authorization: `Bearer ${getToken}`,
-        },
       }),
       invalidatesTags: [{ type: "Users" }],
     }),
 
-    unFreezeAccount: build.mutation<User, Partial<User>>({
+    unFreezeAccount: build.mutation<IUser, Partial<IUser>>({
       query: (id) => ({
         url: `/users/${Endpoints.UNFREEZE_ACCOUNT}/${id}`,
         method: "PATCH",
         body: { isFrozen: false },
-        headers: {
-          Authorization: `Bearer ${getToken}`,
-        },
       }),
       invalidatesTags: [{ type: "Users" }],
     }),
 
-    banAccount: build.mutation<User, { id: string; duration: number }>({
+    banAccount: build.mutation<IUser, { id: string; duration: number }>({
       query: ({ id, duration }) => ({
         url: `/users/${Endpoints.BANNED_ACCOUNT}/${id}`,
         method: "PATCH",
         body: { duration },
-        headers: {
-          Authorization: `Bearer ${getToken}`,
-        },
       }),
       invalidatesTags: [{ type: "Users" }],
     }),
 
-    unBanAccount: build.mutation<User, { id: string }>({
+    unBanAccount: build.mutation<IUser, { id: string }>({
       query: ({ id }) => ({
         url: `/users/${Endpoints.UNBANNED_ACCOUNT}/${id}`,
         method: "PATCH",
         body: { isBanned: false, banExpiresAt: null },
-        headers: {
-          Authorization: `Bearer ${getToken}`,
-        },
       }),
       invalidatesTags: [{ type: "Users" }],
     }),
 
-    deleteAccount: build.mutation<User, { id: string }>({
+    deleteAccount: build.mutation<IUser, { id: string }>({
       query: ({ id }) => ({
         url: `users/${Endpoints.DELETE_ACCOUNT}/${id}`,
         method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${getToken}`,
-        },
       }),
       invalidatesTags: [{ type: "Users" }],
     }),
@@ -198,51 +190,42 @@ export const userApi = createApi({
     }),
 
     resetPassword: build.mutation<
-      User,
+      IUser,
       { token: string; password: string; confirmPass: string }
     >({
       query: ({ token, password, confirmPass }) => ({
         url: `/users/${Endpoints.RESET_PASSWORD}/${token}`,
         method: "POST",
         body: { password, confirmPass },
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
       }),
       invalidatesTags: [{ type: "Users" }],
     }),
 
     updateUserInfo: build.mutation<
-      User,
+      IUser,
       { id: string; username: string; email: string; phone_number: string }
     >({
       query: ({ id, username, email, phone_number }) => ({
         url: `/users/${Endpoints.USER_INFO}/${id}`,
         method: "PATCH",
         body: { username, email, phone_number },
-        headers: {
-          Authorization: `Bearer ${getToken}`,
-        },
       }),
       invalidatesTags: [{ type: "Users" }],
     }),
 
     updatePassword: build.mutation<
-      User,
+      IUser,
       { id: string; password: string; confirmPass: string }
     >({
       query: ({ id, password, confirmPass }) => ({
         url: `/users/${Endpoints.UPDATE_PASSWORD}/${id}`,
         method: "PATCH",
         body: { password, confirmPass },
-        headers: {
-          Authorization: `Bearer ${getToken}`,
-        },
       }),
       invalidatesTags: [{ type: "Users" }],
     }),
 
-    saveFcmToken: build.mutation<User, { token: string }>({
+    saveFcmToken: build.mutation<IUser, { token: string }>({
       query: ({ token }) => ({
         url: `/users/${Endpoints.SAVE_FCM_TOKEN}`,
         method: "POST",
@@ -264,6 +247,8 @@ export const {
   useResendOtpMutation,
   useVerifyHostAccountMutation,
   useUserLoginMutation,
+  useAddToWishlistMutation,
+  useRemoveFromWishlistMutation,
   useFreezeAccountMutation,
   useUnFreezeAccountMutation,
   useBanAccountMutation,

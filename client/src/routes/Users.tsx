@@ -12,6 +12,7 @@ import Register from "../pages/user/Register";
 import ResetPass from "../pages/ResetPass";
 import ProtectedRoute from "./ProtectedRoute";
 import VerifyAccount from "../pages/user/VerifyAccount";
+import SelectedTour from "../pages/user/SelectedTour";
 
 const Users: React.FC = () => {
   return (
@@ -28,6 +29,7 @@ const Users: React.FC = () => {
         <Route path="our-services" element={<OurServices />} />
         <Route path="privacy-policy" element={<Privacy_Policy />} />
         <Route path="terms-conditions" element={<Terms_Conditions />} />
+        <Route path="tours" element={<SelectedTour />} />
       </Route>
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />

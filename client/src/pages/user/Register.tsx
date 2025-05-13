@@ -13,10 +13,10 @@ import { useUserRegisterMutation } from "../../api/slice/userApi";
 import { AxiosError } from "axios";
 import { ErrorMessageType } from "../../types";
 import toast from "react-hot-toast";
-import { saveToken } from "../../utils/localeStorage";
 import { Eye, EyeOff } from "lucide-react";
 import Triptopia from "../../assets/photo/logo-dark.png";
 import Footer from "../../components/Footer";
+import { setAuthToken } from "../../api/slice/baseApi";
 
 interface MyFormValues {
   username: string;
@@ -45,7 +45,7 @@ const Register: React.FC = () => {
     const tokenProcessed = localStorage.getItem("tokenProcessed");
 
     if (token && !tokenProcessed) {
-      saveToken(token);
+      setAuthToken(token)
       localStorage.setItem("userauth", "true");
       localStorage.setItem("tokenProcessed", "true");
 

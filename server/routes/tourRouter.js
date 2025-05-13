@@ -1,6 +1,8 @@
 const {
-  getAllTour,
+  getAllTours,
+  getTourByValues,
   getTourById,
+  getTourRating,
   deleteTour,
   createTour,
   updateTour,
@@ -12,7 +14,8 @@ const updateTourValidation = require("../middlewares/tourRouter/updateTour.js");
 const { verifyToken } = require("../config/verifyToken.js");
 const imageUpload = require("../config/profileImageMulter.js");
 
-router.get("/", getAllTour);
+router.get("/", getAllTours);
+router.get("/search", getTourByValues);
 router.post(
   "/",
   verifyToken,
@@ -21,6 +24,7 @@ router.post(
   createTour
 );
 router.get("/:id", getTourById);
+router.get("/rating/:id", getTourRating);
 router.delete("/:id", verifyToken, deleteTour);
 router.patch(
   "/:id",

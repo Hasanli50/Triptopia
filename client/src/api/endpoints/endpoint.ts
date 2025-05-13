@@ -15,6 +15,7 @@ enum Endpoints {
   USER_INFO = "user-info",
   UPDATE_PASSWORD = "update-password",
   SAVE_FCM_TOKEN = "save-fcm-token",
+  ADD_TO_WISHLIST = "wishlist",
 }
 
 export { BASE_URL, Endpoints };

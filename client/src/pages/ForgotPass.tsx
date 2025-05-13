@@ -5,7 +5,7 @@ import { ErrorMessageType } from "../types";
 import forgotPasschema from "../schema/forgotPassSchema";
 import { useForgotPasswordMutation } from "../api/slice/userApi";
 import toast from "react-hot-toast";
-import { saveToken } from "../utils/localeStorage";
+import { setAuthToken } from "../api/slice/baseApi";
 
 type valuType = {
   email: string;
@@ -22,7 +22,7 @@ const ForgotPass: React.FC = () => {
         const data = await forgotPassword(user).unwrap();
         console.log("API Response:", data);
         const token = data.token;
-        saveToken(token);
+        setAuthToken(token)
         actions.resetForm();
         toast.success("We send message to your email. Please check.");
       } catch (error: unknown) {

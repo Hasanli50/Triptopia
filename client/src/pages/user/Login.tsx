@@ -10,11 +10,11 @@ import { Link, useNavigate } from "react-router";
 import { useFormik } from "formik";
 import userLoginSchema from "../../schema/userLoginSchema";
 import { useUserLoginMutation } from "../../api/slice/userApi";
-import { saveToken } from "../../utils/localeStorage";
 import { toast } from "react-hot-toast";
 import { Eye, EyeOff } from "lucide-react";
 import Triptopia from "../../assets/photo/logo-dark.png";
 import Footer from "../../components/Footer";
+import { setAuthToken } from "../../api/slice/baseApi";
 
 const Login: React.FC = () => {
   const [userLogin, { isLoading }] = useUserLoginMutation();
@@ -35,7 +35,7 @@ const Login: React.FC = () => {
     const tokenProcessed = localStorage.getItem("tokenProcessed");
 
     if (token && !tokenProcessed) {
-      saveToken(token);
+      setAuthToken(token);
       localStorage.setItem("userauth", "true");
       localStorage.setItem("tokenProcessed", "true");
 
@@ -67,7 +67,7 @@ const Login: React.FC = () => {
         const data = await userLogin(user).unwrap();
         console.log("data message : ", data.message);
         const token = data.token;
-        saveToken(token);
+         setAuthToken(token)
         localStorage.setItem("user", "true");
         console.log(data.token);
         actions.resetForm();

@@ -12,6 +12,7 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    // height: 100vh;
     .firstColumn {
       .travellingWithUs {
         font-size: 18px;
@@ -24,6 +25,12 @@
         color: $dark-blue-color;
         font-weight: 600;
         margin-bottom: 13px;
+        @media only screen and (min-width: 800px) and (max-width: 1024px) {
+          font-size: 50px;
+        }
+        @media only screen and (max-width: 768px) {
+          font-size: 50px;
+        }
         @media only screen and (max-width: 425px) {
           font-size: 35px;
         }
@@ -37,7 +44,7 @@
       }
     }
     .imageBox {
-      width: 100%;
+      max-width: 100%;
       .secondSectionImage {
         width: 100%;
       }
@@ -178,7 +185,6 @@
     .imageWrapper {
       position: relative;
       padding: 16px;
-
       .cardImage {
         height: 250px;
         width: 100%;
@@ -206,7 +212,11 @@
 
       .popularBtn {
         background-color: #fa7335;
+        transition: 0.3s ease-in-out;
         color: #fff;
+      }
+      .popularBtn:hover {
+        background-color: $primery-color;
       }
 
       .heartIcon {

@@ -74,17 +74,20 @@ const getById = async (req, res) => {
 const getByToken = async (req, res) => {
   try {
     const { id } = req.user;
-    const user = await User.findById(id, { isDeleted: false }, { password: 0 });
+    const user = await User.findOne(
+      { _id: id, isDeleted: false },
+      { password: 0 }
+    );
 
     if (!user) {
-      res.status(404).json({
+      return res.status(404).json({
         message: "User not found with token",
         status: "fail",
         data: {},
       });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       message: "User successfully found",
       status: "success",
       data: formatObj(user),
@@ -449,6 +452,109 @@ const userLogin = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       message: error.message || "Internal server error",
+      status: "fail",
+      data: {},
+    });
+  }
+};
+
+const addToWishlist = async (req, res) => {
+  try {
+    const { id: userId } = req.user;
+    const { id: tourId } = req.params;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+        dattus: "fail",
+        data: {},
+      });
+    }
+    if (user.isFrozen) {
+      return res.status(403).json({
+        message: "User is frozen!",
+        status: "fail",
+        data: {},
+      });
+    }
+    if (user.isBanned) {
+      return res.status(403).json({
+        message: "User is banned!",
+        status: "fail",
+        data: {},
+      });
+    }
+    if (user.favorites.includes(tourId)) {
+      return res.status(400).json({
+        message: "Tour already in favorites!",
+        status: "fail",
+        data: {},
+      });
+    }
+
+    user.favorites.push(tourId);
+    await user.save();
+
+    res.status(200).json({
+      message: "Tour successfully added to favorites!",
+      status: "success",
+      data: formatObj(user),
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+      status: "fail",
+      data: {},
+    });
+  }
+};
+
+const removeFromWishlist = async (req, res) => {
+  try {
+    const { id: userId } = req.user;
+    const { id: tourId } = req.params;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+        dattus: "fail",
+        data: {},
+      });
+    }
+    if (user.isFrozen) {
+      return res.status(403).json({
+        message: "User is frozen!",
+        status: "fail",
+        data: {},
+      });
+    }
+    if (user.isBanned) {
+      return res.status(403).json({
+        message: "User is banned!",
+        status: "fail",
+        data: {},
+      });
+    }
+
+    if (!user.favorites.includes(tourId)) {
+      return res.status(400).json({
+        message: "Tour not in favorites!",
+        status: "fail",
+        data: {},
+      });
+    }
+    user.favorites = user.favorites.filter((fav) => fav.toString() !== tourId);
+    await user.save();
+
+    res.status(200).json({
+      message: "Tour successfully removed from favorites!",
+      status: "success",
+      data: formatObj(user),
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
       status: "fail",
       data: {},
     });
@@ -887,6 +993,8 @@ module.exports = {
   verifyAccount,
   resendOtp,
   userLogin,
+  addToWishlist,
+  removeFromWishlist,
   freezeAccount,
   unFreezeAccount,
   banAccount,

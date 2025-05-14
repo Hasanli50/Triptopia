@@ -16,16 +16,15 @@ import toast from "react-hot-toast";
 import { useEffect } from "react";
 
 interface ITourCardProps {
-  tour: any; 
+  tour: any;
 }
 
 const TourCard = ({ tour }: ITourCardProps) => {
   const { data: ratingData, error, isLoading } = useGetTourRatingQuery(tour.id);
-  const { data: user, refetch } = useGetByTokenQuery();
+  const { data: user } = useGetByTokenQuery();
   const [addToWishlist, { isLoading: isAdding }] = useAddToWishlistMutation();
   const [removeFromWishlist, { isLoading: isDeleting }] =
     useRemoveFromWishlistMutation();
-
 
   useEffect(() => {
     if (isLoading) {
@@ -43,7 +42,6 @@ const TourCard = ({ tour }: ITourCardProps) => {
   const handleAddToWishlist = async (tourId: string) => {
     try {
       await addToWishlist({ id: tourId }).unwrap();
-      refetch();
       toast.success("Added to wishlist!");
     } catch (error: unknown) {
       const err = error as { data?: { message?: string } };
@@ -55,7 +53,6 @@ const TourCard = ({ tour }: ITourCardProps) => {
   const handleRemoveFromWishlist = async (tourId: string) => {
     try {
       await removeFromWishlist({ id: tourId }).unwrap();
-      refetch();
       toast.success("Removed from wishlist!");
     } catch (error: unknown) {
       const err = error as { data?: { message?: string } };

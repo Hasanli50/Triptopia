@@ -1,6 +1,7 @@
 import { useLocation } from "react-router";
 import { useGetTourByValuesQuery } from "../../api/slice/tourApi";
 import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 const SelectedTour: React.FC = () => {
   const location = useLocation();
@@ -28,10 +29,11 @@ const SelectedTour: React.FC = () => {
 
   useEffect(() => {
     if (error) {
-      console.error("Error fetching tours:", error.tours?.message);
+      toast.error("Failed to fetch tours");
+      console.error("Error fetching tours:", error);
     }
     if (isLoading) {
-      console.log("Loading tours...");
+      toast.loading("Loading tours...", { id: "loading-tours" });
     }
   });
 

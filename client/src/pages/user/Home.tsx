@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Avatar, Col, DatePicker, Form, Row } from "antd";
-import firstSectionImage from "../../assets/photo/firstSectionImage.png";
+import firstSectionImage from "../../assets/photo/firstSectionImage.webp";
 import style from "../../assets/style/user/home.module.scss";
 import { Select } from "antd";
 import { Card, Typography } from "antd";

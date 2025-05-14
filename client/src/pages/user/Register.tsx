@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import style from "../../assets/style/user/register.module.scss";
-import registerImg from "../../assets/photo/freepik__upload__61111.png";
+import registerImg from "../../assets/photo/freepik__upload__61111.webp";
 import googleIcon from "../../assets/icons/Google__G__Logo.svg";
 import Group688 from "../../assets/photo/Group688.png";
 import Vector from "../../assets/photo/Vector.png";

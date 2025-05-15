@@ -6,6 +6,7 @@ import forgotPasschema from "../schema/forgotPassSchema";
 import { useForgotPasswordMutation } from "../api/slice/userApi";
 import toast from "react-hot-toast";
 import { setAuthToken } from "../api/slice/baseApi";
+import { Input } from "antd";
 
 type valuType = {
   email: string;
@@ -49,7 +50,7 @@ const ForgotPass: React.FC = () => {
             </p>
             <form onSubmit={formik.handleSubmit} className={style.form}>
               <div className={style.inputBox}>
-                <input
+                <Input
                   name="email"
                   value={formik.values.email}
                   onChange={formik.handleChange}

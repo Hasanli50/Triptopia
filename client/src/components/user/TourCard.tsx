@@ -14,6 +14,7 @@ import {
 } from "../../api/slice/userApi";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
+import { Skeleton } from "antd";
 
 interface ITourCardProps {
   tour: any;
@@ -62,84 +63,115 @@ const TourCard = ({ tour }: ITourCardProps) => {
   };
 
   return (
-    <Col xs={24} sm={24} md={12} lg={8} xl={8}>
-      <Card
-        hoverable
-        className={style.card}
-        styles={{ body: { padding: "0 24px 24px" } }}
-        cover={
-          <div className={style.imageWrapper}>
-            <img
-              alt="Tour image"
-              src={tour.images[0]}
-              className={style.cardImage}
-            />
-            <div className={style.popular}>
-              <Button
-                type="primary"
-                htmlType="button"
-                className={style.popularBtn}
-              >
-                Popular
-              </Button>
-
-              <Button
-                type="text"
-                icon={
-                  user?.data?.favorites?.some((fav) => fav === tour.id) ? (
-                    <HeartFilled
-                      className={style.heartIcon}
-                      style={{ color: "red" }}
-                    />
-                  ) : (
-                    <HeartOutlined className={style.heartIcon} />
-                  )
-                }
-                onClick={() => {
-                  if (user?.data?.favorites?.some((fav) => fav === tour.id)) {
-                    handleRemoveFromWishlist(tour.id); // Remove from wishlist
-                  } else {
-                    handleAddToWishlist(tour.id); // Add to wishlist
-                  }
-                }}
-                disabled={isAdding || isDeleting}
+    <>
+      {isLoading ? (
+        Array.from({ length: 3 }).map((_, index) => (
+          <Col xs={24} sm={24} md={12} lg={8} xl={8} key={index}>
+            <Card className={style.card}>
+              <div style={{ width: "100%" }}>
+                <Skeleton.Image
+                  className={style.skeletonImage}
+                  style={{
+                    height: "180px",
+                    display: "inline",
+                    marginBottom: "16px",
+                    borderRadius: "8px",
+                  }}
+                  active
+                />
+              </div>
+              <Skeleton
+                active
+                paragraph={{ rows: 4 }}
+                title={false}
+                className={style.skeleton}
               />
+            </Card>
+          </Col>
+        ))
+      ) : (
+        <Col xs={24} sm={24} md={12} lg={8} xl={8}>
+          <Card
+            hoverable
+            className={style.card}
+            styles={{ body: { padding: "0 24px 24px" } }}
+            cover={
+              <div className={style.imageWrapper}>
+                <img
+                  alt="Tour image"
+                  src={tour.images[0]}
+                  className={style.cardImage}
+                />
+                <div className={style.popular}>
+                  <Button
+                    type="primary"
+                    htmlType="button"
+                    className={style.popularBtn}
+                  >
+                    Popular
+                  </Button>
+
+                  <Button
+                    type="text"
+                    icon={
+                      user?.data?.favorites?.some((fav) => fav === tour.id) ? (
+                        <HeartFilled
+                          className={style.heartIcon}
+                          style={{ color: "red" }}
+                        />
+                      ) : (
+                        <HeartOutlined className={style.heartIcon} />
+                      )
+                    }
+                    onClick={() => {
+                      if (
+                        user?.data?.favorites?.some((fav) => fav === tour.id)
+                      ) {
+                        handleRemoveFromWishlist(tour.id); // Remove from wishlist
+                      } else {
+                        handleAddToWishlist(tour.id); // Add to wishlist
+                      }
+                    }}
+                    disabled={isAdding || isDeleting}
+                  />
+                </div>
+              </div>
+            }
+          >
+            <Typography.Text className={style.location}>
+              <EnvironmentFilled style={{ color: "#fa7335" }} /> {tour.location}
+            </Typography.Text>
+
+            <Typography.Title level={5} className={style.title}>
+              {tour.title}
+            </Typography.Title>
+
+            <div className={style.rate}>
+              <Rate
+                allowHalf
+                disabled
+                value={ratingData?.data?.averageRating ?? 0}
+                style={{ fontSize: "14px" }}
+              />
+              <p>
+                {ratingData?.data?.rating ?? "0.0"}
+                <span>({ratingData?.data?.reviews})</span>
+              </p>
             </div>
-          </div>
-        }
-      >
-        <Typography.Text className={style.location}>
-          <EnvironmentFilled style={{ color: "#fa7335" }} /> {tour.location}
-        </Typography.Text>
 
-        <Typography.Title level={5} className={style.title}>
-          {tour.title}
-        </Typography.Title>
-
-        <div className={style.rate}>
-          <Rate
-            allowHalf
-            disabled
-            value={ratingData?.data?.averageRating ?? 0}
-            style={{ fontSize: "14px" }}
-          />
-          <p>
-            {ratingData?.data?.rating ?? "0.0"}
-            <span>({ratingData?.data?.reviews})</span>
-          </p>
-        </div>
-
-        <div className={style.booking}>
-          <Typography.Text className={style.price}>
-            ${tour.price}
-            <span className={style.person}>/Person</span>
-          </Typography.Text>
-          <Button type="primary" className={style.bookBtn}>
-            Book Trip
-          </Button>
-        </div>
-      </Card>
-    </Col>
+            <div className={style.booking}>
+              <Typography.Text className={style.price}>
+                ${tour.price}
+                <span className={style.person}>/Person</span>
+              </Typography.Text>
+              <Button type="primary" className={style.bookBtn}>
+                Book Trip
+              </Button>
+            </div>
+          </Card>
+        </Col>
+      )}
+    </>
   );
 };
 

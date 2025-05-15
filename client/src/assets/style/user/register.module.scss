@@ -47,17 +47,20 @@
 }
 .imgBox {
   width: 100%;
-}
-.img {
-  width: 100%;
-  max-height: 662px;
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+  .img {
+    width: 100%;
+    max-height: 662px;
+  }
 }
 .box {
   margin-bottom: 30px;
 }
 .heading {
   color: $secondary-color;
-  font-size: 47px;
+  font-size: 45px;
   text-transform: capitalize;
   font-weight: 500;
   font-style: normal;
@@ -75,6 +78,10 @@
 }
 .input {
   @extend %input;
+  margin-bottom: 5px;
+}
+.error {
+  @extend %error;
 }
 .inputBox {
   display: flex;
@@ -83,47 +90,6 @@
 }
 .link {
   text-decoration: none;
-}
-.username {
-  margin-bottom: 5px;
-}
-.phoneNumber {
-  margin-bottom: 5px;
-}
-.email {
-  margin-bottom: 5px;
-}
-.password {
-  margin-bottom: 5px;
-}
-.passState {
-  position: absolute;
-  top: 280px;
-  right: 15px;
-  cursor: pointer;
-  color: $error-message-color;
-  width: 18px;
-  @media only screen and (min-device-width: 1600px) and (max-device-width: 2560px) {
-    top: 395px;
-  }
-  @media only screen and (max-width: 1440px) {
-    top: 350px;
-  }
-  @media only screen and (min-device-width: 900px) and (max-device-width: 1024px) {
-    top: 350px;
-  }
-  @media only screen and (min-device-width: 500px) and (max-device-width: 900px) {
-    top: 1030px;
-  }
-  @media only screen and (min-device-width: 400px) and (max-device-width: 500px) {
-    top: 935px;
-  }
-  @media only screen and (min-device-width: 375px) and (max-device-width: 400px) {
-    top: 870px;
-  }
-  @media only screen and (min-device-width: 320px) and (max-device-width: 340px) {
-    top: 805px;
-  }
 }
 .forgotPass {
   font-size: 12px;
@@ -137,10 +103,9 @@
   color: $primery-color;
 }
 .submitBtn {
-  margin-bottom: 25px;
   padding: 10px 10px;
   border-radius: 5px;
-  width: 224px;
+  width: 100%;
   color: #fff;
   background-color: $secondary-color;
   transition: 0.3s ease-in-out;
@@ -152,116 +117,10 @@
 .submitBtn:hover {
   background-color: $primery-color;
 }
-.or {
-  margin-bottom: 15px;
-  font-size: 16px;
-  color: $secondary-color;
-  text-transform: uppercase;
-  position: relative;
-  text-align: center;
-}
-.or::after,
-.or::before {
-  content: "";
-  width: 94px;
-  height: 1px;
-  position: absolute;
-  background-color: $secondary-color;
-  top: 8px;
-}
-.or::after {
-  right: 150px;
-}
-.or::before {
-  left: 150px;
-}
-
-@media (max-width: 2560px) {
-  .or::after {
-    right: 390px;
-  }
-
-  .or::before {
-    left: 390px;
-  }
-}
-
-@media (max-width: 1440px) {
-  .or::after {
-    right: 150px;
-  }
-
-  .or::before {
-    left: 150px;
-  }
-}
-
-@media (max-width: 1024px) {
-  .or::after {
-    right: 210px;
-  }
-
-  .or::before {
-    left: 210px;
-  }
-}
-
-@media (max-width: 768px) {
-  .or::after {
-    right: 197px;
-  }
-
-  .or::before {
-    left: 197px;
-  }
-}
-
-@media (max-width: 425px) {
-  .or::after,
-  .or::before {
-    width: 90px;
-  }
-  .or::after {
-    right: 190px;
-  }
-
-  .or::before {
-    left: 190px;
-  }
-}
-
-@media (max-width: 375px) {
-  .or::after,
-  .or::before {
-    width: 90px;
-  }
-  .or::after {
-    right: 170px;
-  }
-
-  .or::before {
-    left: 170px;
-  }
-}
-
-@media (max-width: 320px) {
-  .or::after,
-  .or::before {
-    width: 88px;
-  }
-  .or::after {
-    right: 150px;
-  }
-
-  .or::before {
-    left: 150px;
-  }
-}
-
 .btnBox {
   margin: auto;
   margin-bottom: 16px;
-  width: 224px;
+  max-width: 300px;
 }
 .btn {
   border: 1px solid $secondary-color;
@@ -302,15 +161,15 @@
   position: absolute;
   right: 0;
   opacity: 0.3;
-  bottom: 58px;
+  bottom: 4px;
   @media (max-width: 534px) {
     display: none;
   }
 }
 .groupImageSecond {
   position: absolute;
-  left: 52%;
-  bottom: 58px;
+  left: 20px;
+  bottom: 4px;
   opacity: 0.3;
   @media (max-width: 768px) {
     left: 0;
@@ -323,7 +182,7 @@
 .groupImageThird {
   position: absolute;
   right: -200px;
-  top: 30px;
+  top: -15px;
   z-index: -1000;
   @media (max-width: 768px) {
     display: none;

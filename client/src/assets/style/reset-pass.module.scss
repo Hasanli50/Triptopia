@@ -43,69 +43,8 @@
   width: 100%;
   margin-bottom: 5px;
 }
-.firstPassState {
-  position: absolute;
-  top: 260px;
-  left: 505px;
-  cursor: pointer;
-  color: $error-message-color;
-  width: 18px;
-  @media only screen and (min-device-width: 1600px) and (max-device-width: 2560px) {
-    top: 400px;
-    left: 620px;
-  }
-  @media only screen and (min-device-width: 900px) and (max-device-width: 1024px) {
-    top: 215px;
-    left: 470px;
-  }
-  @media only screen and (min-device-width: 500px) and (max-device-width: 900px) {
-    top: 215px;
-    left: 445px;
-  }
-  @media only screen and (min-device-width: 400px) and (max-device-width: 500px) {
-    top: 162px;
-    left: 345px;
-  }
-  @media only screen and (min-device-width: 375px) and (max-device-width: 400px) {
-    top: 169px;
-    left: 305px;
-  }
-  @media only screen and (min-device-width: 320px) and (max-device-width: 340px) {
-    top: 159px;
-    left: 255px;
-  }
-}
-.secondPassState {
-  position: absolute;
-  top: 340px;
-  left: 505px;
-  cursor: pointer;
-  color: $error-message-color;
-  width: 18px;
-  @media only screen and (min-device-width: 1600px) and (max-device-width: 2560px) {
-    top: 480px;
-    left: 620px;
-  }
-  @media only screen and (min-device-width: 900px) and (max-device-width: 1024px) {
-    top: 296px;
-    left: 470px;
-  }
-  @media only screen and (min-device-width: 500px) and (max-device-width: 900px) {
-    top: 296px;
-    left: 445px;
-  }
-  @media only screen and (min-device-width: 400px) and (max-device-width: 500px) {
-    top: 244px;
-    left: 345px;
-  }
-  @media only screen and (min-device-width: 375px) and (max-device-width: 400px) {
-    top: 253px;
-    left: 305px;
-  }
-  @media only screen and (min-device-width: 320px) and (max-device-width: 340px) {
-    top: 243px;
-    left: 255px;
-  }
+.error {
+  @extend %error;
 }
 .resetBtn {
   width: 100%;

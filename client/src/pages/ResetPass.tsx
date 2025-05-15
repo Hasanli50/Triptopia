@@ -1,12 +1,11 @@
-import { useState } from "react";
 import style from "../assets/style/reset-pass.module.scss";
-import { Eye, EyeOff } from "lucide-react";
 import { useFormik } from "formik";
 import { useResetPasswordMutation } from "../api/slice/userApi";
 import { AxiosError } from "axios";
 import { ErrorMessageType } from "../types";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router";
+import { Input } from "antd";
 
 type ValuesType = {
   password: string;
@@ -14,8 +13,6 @@ type ValuesType = {
   token: string;
 };
 const ResetPass = () => {
-  const [showPass, setShowPass] = useState<boolean>(false);
-  const [showConfirmPass, setShowConfirmPass] = useState<boolean>(false);
   const [resetPassword, { isLoading, isError }] = useResetPasswordMutation();
   const { token } = useParams<{ token: string }>();
   const navigate = useNavigate();
@@ -63,56 +60,30 @@ const ResetPass = () => {
             </p>
             <form className={style.form} onSubmit={formik.handleSubmit}>
               <div className={style.inputBox}>
-                <input
+                <Input.Password
                   className={style.input}
                   name="password"
                   value={formik.values.password}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  type={showPass ? "text" : "password"}
                   placeholder="Enter password"
                 />
                 {formik.errors.password && formik.touched.password ? (
-                  <p style={{ color: "#ff7e01" }}>{formik.errors.password}</p>
+                  <p className={style.error}>{formik.errors.password}</p>
                 ) : null}
-                {showPass ? (
-                  <span onClick={() => setShowPass(false)}>
-                    {" "}
-                    <Eye className={style.firstPassState} />
-                  </span>
-                ) : (
-                  <span onClick={() => setShowPass(true)}>
-                    {" "}
-                    <EyeOff className={style.firstPassState} />
-                  </span>
-                )}
               </div>
 
               <div className={style.inputBox}>
-                <input
+                <Input.Password
                   className={style.input}
                   name="confirmPass"
                   value={formik.values.confirmPass}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  type={showConfirmPass ? "text" : "password"}
                   placeholder="Enter confirm password"
                 />
-                {showConfirmPass ? (
-                  <span onClick={() => setShowConfirmPass(false)}>
-                    {" "}
-                    <Eye className={style.secondPassState} />
-                  </span>
-                ) : (
-                  <span onClick={() => setShowConfirmPass(true)}>
-                    {" "}
-                    <EyeOff className={style.secondPassState} />
-                  </span>
-                )}
                 {formik.errors.confirmPass && formik.touched.confirmPass ? (
-                  <p style={{ color: "#ff7e01" }}>
-                    {formik.errors.confirmPass}
-                  </p>
+                  <p className={style.error}>{formik.errors.confirmPass}</p>
                 ) : null}
               </div>
 

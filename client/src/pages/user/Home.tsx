@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Avatar, Col, DatePicker, Form, Row } from "antd";
+import { Avatar, Col, DatePicker, Form, Row, Skeleton } from "antd";
 import firstSectionImage from "../../assets/photo/firstSectionImage.webp";
 import style from "../../assets/style/user/home.module.scss";
 import { Select } from "antd";
@@ -210,23 +210,37 @@ const Home: React.FC = () => {
           </div>
           <div className={style.places}>
             <Row gutter={[16, 10]}>
-              {infoAboutTour
-                ?.slice()
-                .sort(() => Math.random() - 0.5)
-                .slice(0, 4)
-                .map((tour, index) => (
-                  <Col key={index} xs={12} sm={12} md={6} lg={6} xl={6}>
-                    <Link to={`/tours/${tour.id}`}>
-                      <div className={style.imgBox}>
-                        <img
-                          className={style.img}
-                          src={tour.images[0]}
-                          alt="travel place"
-                        />
+              {isLoading
+                ? Array.from({ length: 3 }).map((_, index) => (
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} key={index}>
+                      <div
+                        style={{
+                          width: "100%",
+                          display: "flex",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Skeleton.Avatar active shape="circle" size={80} />
                       </div>
-                    </Link>
-                  </Col>
-                ))}
+                    </Col>
+                  ))
+                : infoAboutTour
+                    ?.slice()
+                    .sort(() => Math.random() - 0.5)
+                    .slice(0, 4)
+                    .map((tour, index) => (
+                      <Col key={index} xs={12} sm={12} md={6} lg={6} xl={6}>
+                        <Link to={`/tours/${tour.id}`}>
+                          <div className={style.imgBox}>
+                            <img
+                              className={style.img}
+                              src={tour.images[0]}
+                              alt="travel place"
+                            />
+                          </div>
+                        </Link>
+                      </Col>
+                    ))}
             </Row>
           </div>
         </div>

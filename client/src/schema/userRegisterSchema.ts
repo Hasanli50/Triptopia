@@ -13,7 +13,7 @@ const userRegisterSchema = yup.object().shape({
       /^(\+994)(50|51|55|70|77|99|10)[0-9]{7}$/,
       "Invalid Azerbaijani phone number"
     )
-    .required("Phone number is required")
+    .required("Phone number is required!")
 
     .trim(),
   email: yup

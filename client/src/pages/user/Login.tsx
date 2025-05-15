@@ -1,24 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import style from "../../assets/style/user/login.module.scss";
 import airplane from "../../assets/photo/freepik__upload__54828.png";
 import googleIcon from "../../assets/icons/Google__G__Logo.svg";
 import Group688 from "../../assets/photo/Group688.png";
 import Vector from "../../assets/photo/Vector.png";
 import PlaneVector from "../../assets/photo/plane-vector.png";
-import Grid from "@mui/material/Grid";
 import { Link, useNavigate } from "react-router";
 import { useFormik } from "formik";
 import userLoginSchema from "../../schema/userLoginSchema";
 import { useUserLoginMutation } from "../../api/slice/userApi";
 import { toast } from "react-hot-toast";
-import { Eye, EyeOff } from "lucide-react";
 import Triptopia from "../../assets/photo/logo-dark.png";
 import Footer from "../../components/Footer";
 import { setAuthToken } from "../../api/slice/baseApi";
+import { Col, Divider, Input, Row } from "antd";
 
 const Login: React.FC = () => {
   const [userLogin, { isLoading }] = useUserLoginMutation();
-  const [show, setShow] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const getTokenFromQuery = (): string | null => {
@@ -65,11 +63,9 @@ const Login: React.FC = () => {
       try {
         const user = { email: values.email, password: values.password };
         const data = await userLogin(user).unwrap();
-        console.log("data message : ", data.message);
         const token = data.token;
-         setAuthToken(token)
+        setAuthToken(token);
         localStorage.setItem("user", "true");
-        console.log(data.token);
         actions.resetForm();
         toast.success(data.message || "You successfully signed in");
         setTimeout(() => {
@@ -121,21 +117,21 @@ const Login: React.FC = () => {
       </section>
 
       <section className={style.login}>
-        <Grid container spacing={5}>
-          <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+        <Row gutter={[36, 16]}>
+          <Col xs={24} sm={24} md={24} lg={12} xl={12}>
             <div className={style.imgBox}>
               <img className={style.img} src={airplane} alt="airplane" />
             </div>
-          </Grid>
-          <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+          </Col>
+          <Col xs={24} sm={24} md={24} lg={12} xl={12}>
             <div className={style.box}>
               <h2 className={style.heading}>welcome</h2>
               <p className={style.loginWithEmail}>Login with Email</p>
 
               <form className={style.form} onSubmit={formik.handleSubmit}>
                 <div style={{ width: "100%", marginBottom: "25px" }}>
-                  <input
-                    className={`${style.input} ${style.email}`}
+                  <Input
+                    className={style.input}
                     type="email"
                     placeholder="Enter Email"
                     autoComplete="currect-email"
@@ -145,40 +141,27 @@ const Login: React.FC = () => {
                     onBlur={formik.handleBlur}
                   />
                   {formik.errors.email && formik.touched.email ? (
-                    <p style={{ color: "#7bcbdb" }}>{formik.errors.email}</p>
+                    <p className={style.error}>{formik.errors.email}</p>
                   ) : null}
                 </div>
                 <div style={{ width: "100%", marginBottom: "5px" }}>
-                  <input
-                    className={`${style.input} ${style.password}`}
-                    type={show ? "text" : "password"}
-                    autoComplete="current-password"
+                  <Input.Password
+                    className={style.input}
                     placeholder="Enter Password"
+                    autoComplete="current-password"
                     name="password"
                     value={formik.values.password}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                   />
                   {formik.errors.password && formik.touched.password ? (
-                    <p style={{ color: "#7bcbdb" }}>{formik.errors.password}</p>
+                    <p className={style.error}>{formik.errors.password}</p>
                   ) : null}
-
-                  {show ? (
-                    <span onClick={() => setShow(false)}>
-                      {" "}
-                      <Eye className={style.passState} />
-                    </span>
-                  ) : (
-                    <span onClick={() => setShow(true)}>
-                      {" "}
-                      <EyeOff className={style.passState} />
-                    </span>
-                  )}
                 </div>
                 <Link to={"/forgot-password"} className={style.link}>
                   <p className={style.forgotPass}>Forgot your password?</p>
                 </Link>
-                <div style={{ textAlign: "center" }}>
+                <div style={{ margin: "auto", maxWidth: "300px" }}>
                   <button type="submit" className={style.submitBtn}>
                     {isLoading ? (
                       <span className={style.loader}></span>
@@ -189,7 +172,20 @@ const Login: React.FC = () => {
                 </div>
               </form>
 
-              <p className={style.or}>or</p>
+              <div style={{ maxWidth: "300px", margin: "0 auto" }}>
+                <Divider
+                  style={{
+                    borderColor: "#faa935",
+                    fontSize: "16px",
+                    color: "#faa935",
+                    fontWeight: "600",
+                    margin: "10px 0",
+                  }}
+                >
+                  or
+                </Divider>
+              </div>
+              {/* <p className={style.or}>or</p> */}
               <div className={style.btnBox}>
                 <button className={style.btn} onClick={handleGoogleLogin}>
                   <img className={style.iconImg} src={googleIcon} alt="icon" />
@@ -218,8 +214,8 @@ const Login: React.FC = () => {
               src={PlaneVector}
               alt="group images"
             />
-          </Grid>
-        </Grid>
+          </Col>
+        </Row>
       </section>
 
       <Footer />

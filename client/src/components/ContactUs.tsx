@@ -1,6 +1,6 @@
 import style from "../assets/style/contactUs.module.scss";
 import Grid from "@mui/material/Grid";
-import touristMale from "../assets/photo/male-tourist.png";
+import touristMale from "../assets/photo/male-tourist.avif";
 import React from "react";
 
 const ContactUs: React.FC = () => {

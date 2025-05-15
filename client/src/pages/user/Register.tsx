@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import style from "../../assets/style/user/register.module.scss";
 import registerImg from "../../assets/photo/freepik__upload__61111.webp";
 import googleIcon from "../../assets/icons/Google__G__Logo.svg";
 import Group688 from "../../assets/photo/Group688.png";
 import Vector from "../../assets/photo/Vector.png";
 import PlaneVector from "../../assets/photo/plane-vector.png";
-import Grid from "@mui/material/Grid";
 import { Link, useNavigate } from "react-router";
 import { useFormik } from "formik";
 import userRegisterSchema from "../../schema/userRegisterSchema";
@@ -13,10 +12,10 @@ import { useUserRegisterMutation } from "../../api/slice/userApi";
 import { AxiosError } from "axios";
 import { ErrorMessageType } from "../../types";
 import toast from "react-hot-toast";
-import { Eye, EyeOff } from "lucide-react";
 import Triptopia from "../../assets/photo/logo-dark.png";
 import Footer from "../../components/Footer";
 import { setAuthToken } from "../../api/slice/baseApi";
+import { Col, Divider, Input, Row } from "antd";
 
 interface MyFormValues {
   username: string;
@@ -27,7 +26,6 @@ interface MyFormValues {
 
 const Register: React.FC = () => {
   const [userRegister, { isLoading, isError }] = useUserRegisterMutation();
-  const [show, setShow] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -45,7 +43,7 @@ const Register: React.FC = () => {
     const tokenProcessed = localStorage.getItem("tokenProcessed");
 
     if (token && !tokenProcessed) {
-      setAuthToken(token)
+      setAuthToken(token);
       localStorage.setItem("userauth", "true");
       localStorage.setItem("tokenProcessed", "true");
 
@@ -129,8 +127,8 @@ const Register: React.FC = () => {
       </section>
 
       <section className={style.register}>
-        <Grid container spacing={5}>
-          <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+        <Row gutter={[36, 16]}>
+          <Col xs={24} sm={24} md={24} lg={12} xl={12}>
             <div className={style.imgBox}>
               <img
                 className={style.img}
@@ -138,8 +136,8 @@ const Register: React.FC = () => {
                 alt="registerImage"
               />
             </div>
-          </Grid>
-          <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+          </Col>
+          <Col xs={24} sm={24} md={24} lg={12} xl={12}>
             <div className={style.box}>
               <h2 className={style.heading}>create an account</h2>
               <p className={style.agreeWithCondition}>
@@ -161,8 +159,7 @@ const Register: React.FC = () => {
               <form className={style.form} onSubmit={formik.handleSubmit}>
                 <div className={style.inputBox}>
                   <div style={{ width: "100%" }}>
-                    <input
-                      type="text"
+                    <Input
                       className={`${style.input} ${style.username}`}
                       placeholder="Enter Username"
                       autoComplete="current-username"
@@ -172,14 +169,12 @@ const Register: React.FC = () => {
                       onChange={formik.handleChange}
                     />
                     {formik.errors.username && formik.touched.username ? (
-                      <p style={{ color: "#7bcbdb" }}>
-                        {formik.errors.username}
-                      </p>
+                      <p className={style.error}>{formik.errors.username}</p>
                     ) : null}
                   </div>
 
                   <div style={{ width: "100%" }}>
-                    <input
+                    <Input
                       className={`${style.input} ${style.phoneNumber}`}
                       type="tel"
                       pattern="^(\+994)(50|51|55|70|77|99|10)[0-9]{7}$"
@@ -207,7 +202,7 @@ const Register: React.FC = () => {
 
                     {formik.errors.phone_number &&
                     formik.touched.phone_number ? (
-                      <p style={{ color: "#7bcbdb" }}>
+                      <p className={style.error}>
                         {formik.errors.phone_number}
                       </p>
                     ) : null}
@@ -215,7 +210,7 @@ const Register: React.FC = () => {
                 </div>
 
                 <div style={{ width: "100%", marginBottom: "25px" }}>
-                  <input
+                  <Input
                     className={`${style.input} ${style.email}`}
                     type="email"
                     placeholder="Enter Email"
@@ -226,14 +221,13 @@ const Register: React.FC = () => {
                     onChange={formik.handleChange}
                   />
                   {formik.errors.email && formik.touched.email ? (
-                    <p style={{ color: "#7bcbdb" }}>{formik.errors.email}</p>
+                    <p className={style.error}>{formik.errors.email}</p>
                   ) : null}
                 </div>
 
                 <div style={{ width: "100%", marginBottom: "25px" }}>
-                  <input
+                  <Input.Password
                     className={`${style.input} ${style.password}`}
-                    type={show ? "text" : "password"}
                     placeholder="Enter Password"
                     autoComplete="current-password"
                     name="password"
@@ -242,23 +236,11 @@ const Register: React.FC = () => {
                     onChange={formik.handleChange}
                   />
                   {formik.errors.password && formik.touched.password ? (
-                    <p style={{ color: "#7bcbdb" }}>{formik.errors.password}</p>
+                    <p className={style.error}>{formik.errors.password}</p>
                   ) : null}
-
-                  {show ? (
-                    <span onClick={() => setShow(false)}>
-                      {" "}
-                      <Eye className={style.passState} />
-                    </span>
-                  ) : (
-                    <span onClick={() => setShow(true)}>
-                      {" "}
-                      <EyeOff className={style.passState} />
-                    </span>
-                  )}
                 </div>
 
-                <div style={{ textAlign: "center" }}>
+                <div style={{ margin: "auto", maxWidth: "300px" }}>
                   <button type="submit" className={style.submitBtn}>
                     {isLoading ? (
                       <span className={style.loader}></span>
@@ -269,7 +251,19 @@ const Register: React.FC = () => {
                 </div>
               </form>
 
-              <p className={style.or}>or</p>
+              <div style={{ maxWidth: "300px", margin: "0 auto" }}>
+                <Divider
+                  style={{
+                    borderColor: "#faa935",
+                    fontSize: "16px",
+                    color: "#faa935",
+                    fontWeight: "600",
+                    margin: "10px 0",
+                  }}
+                >
+                  or
+                </Divider>
+              </div>
 
               <div className={style.btnBox}>
                 <button className={style.btn} onClick={handleGoogleLogin}>
@@ -299,8 +293,8 @@ const Register: React.FC = () => {
               src={PlaneVector}
               alt="group images"
             />
-          </Grid>
-        </Grid>
+          </Col>
+        </Row>
       </section>
 
       <Footer />

@@ -8,6 +8,7 @@ const {
   verifyAccount,
   resendOtp,
   userLogin,
+  refreshToken,
   addToWishlist,
   removeFromWishlist,
   freezeAccount,
@@ -58,6 +59,7 @@ router.post(
 );
 router.patch("/resend-otp/:id", resendOtp);
 router.post("/user-login", userLogin);
+router.post("/refresh", refreshToken);
 router.delete("/wishlist/:id", verifyToken, removeFromWishlist);
 router.patch("/wishlist/:id", verifyToken, addToWishlist);
 router.patch("/freeze-account/:id", verifyToken, freezeAccount);

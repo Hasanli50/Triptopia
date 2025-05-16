@@ -8,13 +8,13 @@ import PlaneVector from "../../assets/photo/plane-vector.png";
 import { Link, useNavigate } from "react-router";
 import { useFormik } from "formik";
 import userRegisterSchema from "../../schema/userRegisterSchema";
-import { useUserRegisterMutation } from "../../api/slice/userApi";
+import { useUserRegisterMutation } from "../../services/userApi";
 import { AxiosError } from "axios";
 import { ErrorMessageType } from "../../types";
 import toast from "react-hot-toast";
 import Triptopia from "../../assets/photo/logo-dark.png";
 import Footer from "../../components/Footer";
-import { setAuthToken } from "../../api/slice/baseApi";
+import { setAuthToken } from "../../services/baseApi";
 import { Col, Divider, Input, Row } from "antd";
 
 interface MyFormValues {

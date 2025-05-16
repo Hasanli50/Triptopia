@@ -1,7 +1,7 @@
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BASE_URL } from "../endpoints/endpoint";
-import { IReview } from "../../types/review";
-import { ApiResponse } from "../../types/Index.d";
+import { BASE_URL } from "./endpoints/endpoint";
+import { IReview } from "../types/review";
+import { ApiResponse } from "../types/Index.d";
 import { createApi } from "@reduxjs/toolkit/query/react";
 export const reviewApi = createApi({
   reducerPath: "reviewApi",

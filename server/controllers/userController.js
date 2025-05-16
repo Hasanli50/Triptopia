@@ -182,7 +182,7 @@ const userRegister = async (req, res) => {
         "User successfully created and verification code sent to your phone!",
       status: "success",
       data: formatObj(newUser),
-      token: newUser.generateToken(),
+      token: newUser.generateAccessToken(),
     });
   } catch (error) {
     console.error(error);
@@ -438,6 +438,15 @@ const userLogin = async (req, res) => {
         { new: true }
       );
     }
+
+    const { accessToken, refreshToken } = user.generateTokens();
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+    });
+
     return res.status(200).json({
       data: {
         id: formatObj(user).id,
@@ -445,7 +454,7 @@ const userLogin = async (req, res) => {
         email: user.email,
         role: user.role,
       },
-      token: user.generateToken(),
+      token: accessToken,
       message: "User logged in successfully",
       status: "success",
     });
@@ -455,6 +464,40 @@ const userLogin = async (req, res) => {
       status: "fail",
       data: {},
     });
+  }
+};
+
+const refreshToken = async (req, res) => {
+  const refreshToken = req.cookies.refreshToken;
+
+  if (!refreshToken) {
+    return res.status(401).json({ message: "No refresh token found" });
+  }
+
+  try {
+    const decoded = User.decodeToken(refreshToken, "refresh");
+
+    if (decoded instanceof Error) {
+      return res
+        .status(403)
+        .json({ message: "Invalid or expired refresh token" });
+    }
+
+    const user = await User.findById(decoded.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const accessToken = user.generateAccessToken();
+
+    res.status(200).json({
+      message: "Access token refreshed successfully",
+      token: accessToken,
+    });
+  } catch (err) {
+    return res
+      .status(403)
+      .json({ message: "Invalid or expired refresh token" });
   }
 };
 
@@ -770,7 +813,7 @@ const forgotPassword = async (req, res) => {
       });
     }
 
-    const token = user.generateToken();
+    const token = user.generateAccessToken();
 
     transporter
       .sendMail({
@@ -993,6 +1036,7 @@ module.exports = {
   verifyAccount,
   resendOtp,
   userLogin,
+  refreshToken,
   addToWishlist,
   removeFromWishlist,
   freezeAccount,

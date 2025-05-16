@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BASE_URL } from "../endpoints/endpoint";
-import { ITour } from "../../types/tour.d";
-import { ApiResponse } from "../../types/Index.d";
+import { BASE_URL } from "./endpoints/endpoint";
+import { ITour } from "../types/tour";
+import { ApiResponse } from "../types/Index.d";
 
 export const tourApi = createApi({
   reducerPath: "tourApi",

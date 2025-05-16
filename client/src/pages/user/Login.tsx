@@ -8,11 +8,11 @@ import PlaneVector from "../../assets/photo/plane-vector.png";
 import { Link, useNavigate } from "react-router";
 import { useFormik } from "formik";
 import userLoginSchema from "../../schema/userLoginSchema";
-import { useUserLoginMutation } from "../../api/slice/userApi";
+import { useUserLoginMutation } from "../../services/userApi";
 import { toast } from "react-hot-toast";
 import Triptopia from "../../assets/photo/logo-dark.png";
 import Footer from "../../components/Footer";
-import { setAuthToken } from "../../api/slice/baseApi";
+import { setAuthToken } from "../../services/baseApi";
 import { Col, Divider, Input, Row } from "antd";
 
 const Login: React.FC = () => {

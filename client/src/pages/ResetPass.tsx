@@ -1,6 +1,6 @@
 import style from "../assets/style/reset-pass.module.scss";
 import { useFormik } from "formik";
-import { useResetPasswordMutation } from "../api/slice/userApi";
+import { useResetPasswordMutation } from "../services/userApi";
 import { AxiosError } from "axios";
 import { ErrorMessageType } from "../types";
 import toast from "react-hot-toast";

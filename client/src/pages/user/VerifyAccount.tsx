@@ -5,7 +5,7 @@ import {
   useGetUserByTokenFromParamsQuery,
   useResendOtpMutation,
   useVerifyAccountMutation,
-} from "../../api/slice/userApi";
+} from "../../services/userApi";
 import toast from "react-hot-toast";
 import { Flex, Input } from "antd";
 import { useNavigate, useParams } from "react-router";

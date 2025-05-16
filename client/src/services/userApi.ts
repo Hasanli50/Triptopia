@@ -1,7 +1,7 @@
-import { ApiResponse } from "./../../types/Index.d";
+import { ApiResponse } from "../types/Index.d";
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { Endpoints } from "../endpoints/endpoint";
-import { IUser } from "../../types/user";
+import { Endpoints } from "./endpoints/endpoint";
+import { IUser } from "../types/user";
 import { baseQuery } from "./baseApi";
 interface UserResponse {
   token: string;

@@ -1,5 +1,5 @@
 import { useLocation } from "react-router";
-import { useGetTourByValuesQuery } from "../../api/slice/tourApi";
+import { useGetTourByValuesQuery } from "../../services/tourApi";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 

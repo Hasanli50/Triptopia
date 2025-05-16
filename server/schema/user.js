@@ -3,6 +3,7 @@ const { Schema } = mongoose;
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 const JWT_SECRET = process.env.JWT_SECRET;
+const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
 const jwt = require("jsonwebtoken");
 
 const userSchema = new Schema(
@@ -91,22 +92,38 @@ userSchema.statics.login = async function (email, password) {
   return user;
 };
 
-userSchema.methods.generateToken = function () {
+userSchema.methods.generateAccessToken = function () {
   const payload = { id: this._id, role: this.role };
-  const secret = JWT_SECRET || "default_secret_key";
-  const options = { expiresIn: "6h" };
-  return jwt.sign(payload, secret, options);
+  return jwt.sign(payload, process.env.JWT_SECRET || "default_secret_key", {
+    expiresIn: "1h",
+  });
 };
 
-userSchema.statics.decodeToken = function (token) {
-  const secret = JWT_SECRET || "default_secret_key";
-  const decode = jwt.verify(token, secret, (err, decoded) => {
-    if (err) {
-      return err;
-    }
-    return decoded;
+userSchema.methods.generateRefreshToken = function () {
+  const payload = { id: this._id, role: this.role };
+  return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET || "default_refresh_secret", {
+    expiresIn: "20d",
   });
-  return decode;
+};
+
+userSchema.methods.generateTokens = function () {
+  return {
+    accessToken: this.generateAccessToken(),
+    refreshToken: this.generateRefreshToken(),
+  };
+};
+
+userSchema.statics.decodeToken = function (token, type = "access") {
+  const secret =
+    type === "access"
+      ? process.env.JWT_SECRET || "default_secret_key"
+      : process.env.REFRESH_TOKEN_SECRET || "default_refresh_secret";
+
+  try {
+    return jwt.verify(token, secret);
+  } catch (err) {
+    return err;
+  }
 };
 
 module.exports = userSchema;

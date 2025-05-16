@@ -3,9 +3,9 @@ import style from "../assets/style/forgot-password.module.scss";
 import { AxiosError } from "axios";
 import { ErrorMessageType } from "../types";
 import forgotPasschema from "../schema/forgotPassSchema";
-import { useForgotPasswordMutation } from "../api/slice/userApi";
+import { useForgotPasswordMutation } from "../services/userApi";
 import toast from "react-hot-toast";
-import { setAuthToken } from "../api/slice/baseApi";
+import { setAuthToken } from "../services/baseApi";
 import { Input } from "antd";
 
 type valuType = {

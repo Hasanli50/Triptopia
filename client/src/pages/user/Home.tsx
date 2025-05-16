@@ -6,7 +6,7 @@ import { Select } from "antd";
 import { Card, Typography } from "antd";
 import { Rate } from "antd";
 import Accordion from "../../components/user/Accordion";
-import { useGetAllToursQuery } from "../../api/slice/tourApi";
+import { useGetAllToursQuery } from "../../services/tourApi";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router";
 import moment from "moment";

@@ -10,6 +10,7 @@ const reviewRouter = require("./routes/reviewRouter.js");
 const notificationRouter = require("./routes/notificationRouter.js");
 const cantactRouter = require("./routes/contactRouter.js");
 const connectToDb = require("./config/db.js");
+const cookieParser = require("cookie-parser");
 var cors = require("cors");
 
 const passport = require("passport");
@@ -23,7 +24,12 @@ app.get("/", (req, res) => {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cookieParser());
+app.use(cors({
+  origin: process.env.APP_BASE_URL,
+  credentials: true,
+  methods: ["GET", "POST", "PATCH", "DELETE"],
+}));
 
 app.use(
   session({

@@ -5,13 +5,13 @@ import {
   HeartFilled,
   HeartOutlined,
 } from "@ant-design/icons";
-import { useGetTourRatingQuery } from "../../api/slice/tourApi";
+import { useGetTourRatingQuery } from "../../services/tourApi";
 import style from "../../assets/style/user/home.module.scss";
 import {
   useAddToWishlistMutation,
   useGetByTokenQuery,
   useRemoveFromWishlistMutation,
-} from "../../api/slice/userApi";
+} from "../../services/userApi";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
 import { Skeleton } from "antd";

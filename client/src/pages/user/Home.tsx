@@ -11,11 +11,16 @@ import { useEffect } from "react";
 import { Link, useNavigate } from "react-router";
 import moment from "moment";
 import TourCard from "../../components/user/TourCard";
+import { useGetClientFeedbackQuery } from "../../services/clientFeedbackApi";
+import { ArrowRightOutlined } from "@ant-design/icons";
 
 const Home: React.FC = () => {
   const { data: tour, error, isLoading } = useGetAllToursQuery();
-
-  const infoAboutTour = tour?.data;
+  const {
+    data: clientFeedback,
+    error: clientFeedbackError,
+    isLoading: clientFeedbackLoading,
+  } = useGetClientFeedbackQuery();
 
   // Handle form submission
   const [form] = Form.useForm();
@@ -41,6 +46,12 @@ const Home: React.FC = () => {
       console.log("Loading tours...");
     }
   }, [error, isLoading]);
+
+  useEffect(() => {
+    if (clientFeedbackError) {
+      console.error("Error fetching client feedback:", clientFeedbackError);
+    }
+  }, [clientFeedbackError]);
 
   return (
     <main className={style.home}>
@@ -95,7 +106,7 @@ const Home: React.FC = () => {
                     <Select
                       style={{ width: "100%" }}
                       allowClear
-                      options={infoAboutTour?.map((tour) => ({
+                      options={tour?.data?.map((tour) => ({
                         value: tour.location,
                         label: tour.location,
                       }))}
@@ -117,7 +128,7 @@ const Home: React.FC = () => {
                     <Select
                       style={{ width: "100%" }}
                       allowClear
-                      options={infoAboutTour?.map((tour) => ({
+                      options={tour?.data?.map((tour) => ({
                         value: tour?.categoryId?.name,
                         label: tour?.categoryId?.name,
                       }))}
@@ -149,7 +160,7 @@ const Home: React.FC = () => {
                     />
                   </Form.Item>
                 </Col>
-                <Col xs={24} sm={24} md={24} lg={4} xl={4}>
+                <Col xs={12} sm={12} md={12} lg={4} xl={4}>
                   <Form.Item
                     label={<span style={{ color: "white" }}>Budget</span>}
                     name="budget"
@@ -170,7 +181,7 @@ const Home: React.FC = () => {
                     />
                   </Form.Item>
                 </Col>
-                <Col xs={12} sm={12} md={12} lg={4} xl={4}>
+                <Col xs={24} sm={24} md={24} lg={4} xl={4}>
                   <Form.Item
                     label={<span style={{ color: "white" }}>Date</span>}
                     name="date"
@@ -179,6 +190,7 @@ const Home: React.FC = () => {
                     ]}
                   >
                     <DatePicker.RangePicker
+                      style={{ width: "100%" }}
                       disabledDate={(current) =>
                         current < moment().startOf("day")
                       }
@@ -188,7 +200,7 @@ const Home: React.FC = () => {
                 <Col xs={24} sm={24} md={24} lg={4} xl={4}>
                   <div className={style.btnBox}>
                     <button className={style.findTour} type="submit">
-                      find availability
+                      search
                     </button>
                   </div>
                 </Col>
@@ -224,7 +236,7 @@ const Home: React.FC = () => {
                       </div>
                     </Col>
                   ))
-                : infoAboutTour
+                : tour?.data
                     ?.slice()
                     .sort(() => Math.random() - 0.5)
                     .slice(0, 4)
@@ -255,7 +267,7 @@ const Home: React.FC = () => {
           </p>
 
           <Row gutter={[16, 16]}>
-            {infoAboutTour?.map((tour, index) => (
+            {tour?.data?.map((tour, index) => (
               <TourCard key={index} tour={tour} />
             ))}
           </Row>
@@ -268,94 +280,83 @@ const Home: React.FC = () => {
           <p className={style.paragraph}>testimonial</p>
           <p className={style.heading}>what our client said about us</p>
 
+          <div className={style.arrowWrapper}>
+            <p>More <ArrowRightOutlined className={style.arrowIcon} /></p>
+          </div>
+
           <Row gutter={[16, 16]}>
-            <Col xs={24} sm={24} md={12} lg={8} xl={8}>
-              <Card>
-                <div className={style.cardTop}>
-                  <Avatar
-                    className={style.avatar}
-                    src="https://images-bonnier.imgix.net/files/wom/production/2023/10/17190747/avatar-2-lead-f7N0YLhfwqdMd1Np56txVg.jpg?auto=format,compress&crop=focalpoint&fp-x=0.5&fp-y=0.5&ar=1.4414414414414414:1&w=922&q=80&fit=crop"
-                  />
+            {clientFeedbackLoading
+              ? Array.from({ length: 3 }).map((_, index) => (
+                  <Col xs={24} sm={24} md={12} lg={8} xl={8} key={index}>
+                    <Card className={style.card}>
+                      <div
+                        style={{
+                          width: "100%",
+                          display: "flex",
+                          gap: "10px",
+                          marginBottom: "16px",
+                        }}
+                      >
+                        <Skeleton.Avatar
+                          className={style.skeletonImage}
+                          size={"large"}
+                          active
+                          style={{
+                            marginBottom: "16px",
+                          }}
+                        />
+                        <Skeleton
+                          active
+                          paragraph={{ rows: 1 }}
+                          title={true}
+                          className={style.skeleton}
+                        />
+                      </div>
+                      <Skeleton
+                        active
+                        paragraph={{ rows: 2 }}
+                        title={false}
+                        className={style.skeleton}
+                      />
+                    </Card>
+                  </Col>
+                ))
+              : clientFeedback?.data?.clientFeedback
+                  ?.slice(0, 3)
+                  .sort(() => Math.random() - 0.5)
+                  .map((feedback: any, index: number) => (
+                    <Col xs={24} sm={24} md={12} lg={8} xl={8} key={index}>
+                      <Card>
+                        <div className={style.cardTop}>
+                          <Avatar
+                            className={style.avatar}
+                            src={feedback?.userId?.profile_image}
+                          />
 
-                  <div>
-                    <Typography.Title level={5} className={style.userName}>
-                      Vallentina Putri
-                    </Typography.Title>
-                    <Typography className={style.specialist}>
-                      Customer
-                    </Typography>
-                  </div>
-                </div>
-                <Rate
-                  allowHalf
-                  defaultValue={2.5}
-                  style={{ fontSize: "14px" }}
-                />
-                <Typography className={style.sentence}>
-                  As a seasoned traveler, I can confidently say that Tourice is
-                  one of the best travel agencies I've had the pleasure of
-                  working.
-                </Typography>
-              </Card>
-            </Col>
-            <Col xs={24} sm={24} md={12} lg={8} xl={8}>
-              <Card>
-                <div className={style.cardTop}>
-                  <Avatar
-                    className={style.avatar}
-                    src="https://images-bonnier.imgix.net/files/wom/production/2023/10/17190747/avatar-2-lead-f7N0YLhfwqdMd1Np56txVg.jpg?auto=format,compress&crop=focalpoint&fp-x=0.5&fp-y=0.5&ar=1.4414414414414414:1&w=922&q=80&fit=crop"
-                  />
-
-                  <div>
-                    <Typography.Title level={5} className={style.userName}>
-                      Vallentina Putri
-                    </Typography.Title>
-                    <Typography className={style.specialist}>
-                      Customer
-                    </Typography>
-                  </div>
-                </div>
-                <Rate
-                  allowHalf
-                  defaultValue={2.5}
-                  style={{ fontSize: "14px" }}
-                />
-                <Typography className={style.sentence}>
-                  As a seasoned traveler, I can confidently say that Tourice is
-                  one of the best travel agencies I've had the pleasure of
-                  working.
-                </Typography>
-              </Card>
-            </Col>
-            <Col xs={24} sm={24} md={12} lg={8} xl={8}>
-              <Card>
-                <div className={style.cardTop}>
-                  <Avatar
-                    className={style.avatar}
-                    src="https://images-bonnier.imgix.net/files/wom/production/2023/10/17190747/avatar-2-lead-f7N0YLhfwqdMd1Np56txVg.jpg?auto=format,compress&crop=focalpoint&fp-x=0.5&fp-y=0.5&ar=1.4414414414414414:1&w=922&q=80&fit=crop"
-                  />
-
-                  <div>
-                    <Typography.Title level={5} className={style.userName}>
-                      Vallentina Putri
-                    </Typography.Title>
-                    <Typography className={style.specialist}>
-                      Customer
-                    </Typography>
-                  </div>
-                </div>
-                <Rate
-                  allowHalf
-                  defaultValue={2.5}
-                  style={{ fontSize: "14px" }}
-                />
-                <Typography className={style.sentence}>
-                  As a seasoned traveler, I can confidently say that Tourice is
-                  one of the best travel agencies I've had the pleasure of
-                  working.
-                </Typography>
-              </Card>
-            </Col>
+                          <div>
+                            <Typography.Title
+                              level={5}
+                              className={style.userName}
+                            >
+                              {feedback?.userId?.username}
+                            </Typography.Title>
+                            <Typography className={style.specialist}>
+                              Customer
+                            </Typography>
+                          </div>
+                        </div>
+                        <Rate
+                          allowHalf
+                          value={feedback?.rating || 0}
+                          style={{ fontSize: "14px" }}
+                          disabled
+                        />
+                        <Typography className={style.sentence}>
+                          {feedback?.review}
+                        </Typography>
+                      </Card>
+                    </Col>
+                  ))}
           </Row>
         </div>
       </section>

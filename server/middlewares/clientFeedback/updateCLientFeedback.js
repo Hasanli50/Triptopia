@@ -1,6 +1,6 @@
 const { body, validationResult } = require("express-validator");
 
-const updateReviewValidator = [
+const updateClientFeedbackValidator = [
   body("rating")
     .optional()
     .isInt({ min: 1, max: 5 })
@@ -11,6 +11,7 @@ const updateReviewValidator = [
     .withMessage("Review must be max 500 characters long."),
 
   (req, res, next) => {
+    console.log("Running validator middleware");
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({
@@ -23,4 +24,4 @@ const updateReviewValidator = [
   },
 ];
 
-module.exports = updateReviewValidator;
+module.exports = updateClientFeedbackValidator;

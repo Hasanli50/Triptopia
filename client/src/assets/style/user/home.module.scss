@@ -285,13 +285,37 @@
     .heading {
       margin: auto;
       text-align: center;
-      font-size: 45px;
+      font-size: 42px;
       color: $dark-blue-color;
       font-weight: 600;
       max-width: 660px;
       text-transform: capitalize;
-      margin-bottom: 60px;
+      // margin-bottom: 20px;
     }
+    .arrowWrapper {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      margin-top: auto;
+      padding: 15px;
+    }
+
+    .arrowIcon {
+      cursor: pointer;
+      color: $secondary-color;
+      transition: 0.3s ease-in-out;
+      display: inline-block;
+      border-radius: 50%;
+      padding: 10px 11px;
+      margin-left: 10px;
+
+      &:hover {
+        color: $button-color;
+        background-color: antiquewhite;
+        box-shadow: 0 0 10px $button-color;
+      }
+    }
+
     .cardTop {
       display: flex;
       align-items: center;

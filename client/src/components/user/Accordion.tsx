@@ -3,27 +3,60 @@ import type { CollapseProps } from "antd";
 import { Collapse } from "antd";
 import "../../assets/style/user/accordion.scss";
 
-const text = `
-  A dog is a type of domesticated animal.
-  Known for its loyalty and faithfulness,
-  it can be found as a welcome guest in many households across the world.
-`;
-
 const items: CollapseProps["items"] = [
   {
     key: "1",
-    label: "This is panel header 1",
-    children: <p style={{ color: "#012e41" }}>{text}</p>,
+    label: "What is Triptopia?",
+    children: (
+      <p style={{ color: "#012e41" }}>
+        Triptopia is a trip planning app that helps you organize your travel
+        itinerary, discover new places, and manage all your travel plans in one
+        place. From accommodation to attractions and maps, everything you need
+        is right at your fingertips.
+      </p>
+    ),
   },
   {
     key: "2",
-    label: "This is panel header 2",
-    children: <p style={{ color: "#012e41" }}>{text}</p>,
+    label: " Is Triptopia free to use?",
+    children: (
+      <p style={{ color: "#012e41" }}>
+        Yes! Triptopia offers a free version with core trip planning features.
+        We may offer premium features for advanced users, but planning and
+        saving trips is free for everyone.
+      </p>
+    ),
   },
   {
     key: "3",
-    label: "This is panel header 3",
-    children: <p style={{ color: "#012e41" }}>{text}</p>,
+    label: "Can I use the app offline?",
+    children: (
+      <p style={{ color: "#012e41" }}>
+        Yes, you can access saved trips and certain features offline. Make sure
+        to download your trip details or offline maps before you go.
+      </p>
+    ),
+  },
+  {
+    key: "4",
+    label: "Can I share my trip with others?",
+    children: (
+      <p style={{ color: "#012e41" }}>
+        Absolutely! You can invite friends or family to view or collaborate on
+        your trip. Just go to your trip settings and choose “Share Trip” to send
+        an invite. 6. Can I book flights, hotels, or tours dire
+      </p>
+    ),
+  },
+  {
+    key: "5",
+    label: "How do I delete a trip?",
+    children: (
+      <p style={{ color: "#012e41" }}>
+        Go to the trip details screen, tap the menu icon (⋮), and choose “Delete
+        Trip.” Please note that this action is permanent.
+      </p>
+    ),
   },
 ];
 

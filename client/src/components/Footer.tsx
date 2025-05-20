@@ -14,13 +14,13 @@ import CallIcon from "@mui/icons-material/Call";
 import EmailIcon from "@mui/icons-material/Email";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Link } from "react-router";
-import ContactUs from "./ContactUs";
+// import ContactUs from "./ContactUs";
 import React from "react";
 
 const Footer: React.FC = () => {
   return (
     <>
-      <ContactUs />
+      {/* <ContactUs /> */}
       <section className={style.footer}>
         <div className={style.footer__box}>
           <div className={style.footer__box__first}>

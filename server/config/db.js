@@ -9,7 +9,7 @@ const connectToDb = () => {
       console.log("Mongo db successfully connected");
     })
     .catch((error) => {
-      console.log("Error in connect to mongo db");
+      console.log("Error in connect to mongo db", error);
     });
 };
 

@@ -9,6 +9,7 @@ const bookingRouter = require("./routes/bookingRouter.js");
 const reviewRouter = require("./routes/reviewRouter.js");
 const notificationRouter = require("./routes/notificationRouter.js");
 const cantactRouter = require("./routes/contactRouter.js");
+const clientFeedbackRouter = require("./routes/clientFeedbackRouter.js");
 const connectToDb = require("./config/db.js");
 const cookieParser = require("cookie-parser");
 var cors = require("cors");
@@ -25,11 +26,13 @@ app.get("/", (req, res) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cors({
-  origin: process.env.APP_BASE_URL,
-  credentials: true,
-  methods: ["GET", "POST", "PATCH", "DELETE"],
-}));
+app.use(
+  cors({
+    origin: process.env.APP_BASE_URL,
+    credentials: true,
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+  })
+);
 
 app.use(
   session({
@@ -49,6 +52,7 @@ app.use("/bookings", bookingRouter);
 app.use("/reviews", reviewRouter);
 app.use("/notifications", notificationRouter);
 app.use("/contacts", cantactRouter);
+app.use("/clientfeedbacks", clientFeedbackRouter);
 
 connectToDb();
 
